@@ -39,17 +39,23 @@ struct ContentView: View {
     @EnvironmentObject private var license: LicenseManager
     @EnvironmentObject private var updater: UpdateManager
     @State private var selectedTab: SidebarTab = .clean
+    @State private var onboardingComplete = UserDefaults.standard.bool(forKey: "macmartin_onboarding_complete")
 
     var body: some View {
         ZStack {
-            NavigationSplitView {
-                SidebarView(selection: $selectedTab)
-            } detail: {
-                detailView
-                    .animation(.easeInOut(duration: 0.2), value: selectedTab)
-            }
-            .sheet(isPresented: $license.showPaywall) {
-                PaywallView()
+            if !onboardingComplete {
+                OnboardingView(isComplete: $onboardingComplete)
+            } else {
+                NavigationSplitView {
+                    SidebarView(selection: $selectedTab)
+                } detail: {
+                    detailView
+                        .animation(.easeInOut(duration: 0.2), value: selectedTab)
+                }
+                .sheet(isPresented: $license.showPaywall) {
+                    PaywallView()
+                }
+                .transition(.opacity)
             }
 
             if updater.updateRequired {
