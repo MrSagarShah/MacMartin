@@ -9,188 +9,233 @@ struct OnboardingView: View {
 
     var body: some View {
         ZStack {
-            // Background gradient
+            // Full-bleed background
             LinearGradient(
                 colors: [
-                    Color(red: 0.06, green: 0.07, blue: 0.14),
-                    Color(red: 0.10, green: 0.10, blue: 0.20),
+                    Color(red: 0.05, green: 0.06, blue: 0.12),
+                    Color(red: 0.08, green: 0.08, blue: 0.18),
+                    Color(red: 0.06, green: 0.06, blue: 0.14),
                 ],
-                startPoint: .top, endPoint: .bottom
+                startPoint: .topLeading, endPoint: .bottomTrailing
             )
             .ignoresSafeArea()
 
+            // Subtle accent orb behind content
+            Circle()
+                .fill(MoleColors.accent.opacity(0.06))
+                .frame(width: 400, height: 400)
+                .blur(radius: 80)
+                .offset(y: -40)
+
             VStack(spacing: 0) {
-                // Content
-                TabView(selection: $currentPage) {
-                    welcomePage.tag(0)
-                    featuresPage.tag(1)
-                    proPage.tag(2)
-                    readyPage.tag(3)
-                }
-                .tabViewStyle(.automatic)
-                .animation(.easeInOut(duration: 0.3), value: currentPage)
-
-                // Bottom bar
-                HStack {
-                    // Page dots
-                    HStack(spacing: 8) {
-                        ForEach(0..<totalPages, id: \.self) { i in
-                            Circle()
-                                .fill(i == currentPage ? MoleColors.accent : Color.white.opacity(0.2))
-                                .frame(width: 8, height: 8)
-                                .scaleEffect(i == currentPage ? 1.2 : 1.0)
-                                .animation(.spring(response: 0.3), value: currentPage)
-                        }
-                    }
-
-                    Spacer()
-
-                    // Navigation
-                    if currentPage < totalPages - 1 {
-                        HStack(spacing: 12) {
-                            Button("Skip") {
-                                completeOnboarding()
-                            }
-                            .buttonStyle(.plain)
-                            .foregroundStyle(.white.opacity(0.4))
-                            .font(.subheadline)
-
-                            Button {
-                                withAnimation { currentPage += 1 }
-                            } label: {
-                                HStack(spacing: 4) {
-                                    Text("Next")
-                                        .fontWeight(.semibold)
-                                    Image(systemName: "arrow.right")
-                                        .font(.caption)
-                                }
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 8)
-                            }
-                            .buttonStyle(.borderedProminent)
-                            .tint(MoleColors.accent)
-                        }
-                    } else {
-                        Button {
-                            completeOnboarding()
-                        } label: {
-                            HStack(spacing: 6) {
-                                Image(systemName: "checkmark.circle.fill")
-                                Text("Get Started")
-                                    .fontWeight(.bold)
-                            }
-                            .padding(.horizontal, 28)
-                            .padding(.vertical, 10)
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .tint(MoleColors.success)
+                // Page content
+                Group {
+                    switch currentPage {
+                    case 0: welcomePage
+                    case 1: featuresPage
+                    case 2: proPage
+                    default: readyPage
                     }
                 }
-                .padding(.horizontal, 40)
-                .padding(.bottom, 30)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .transition(.asymmetric(
+                    insertion: .move(edge: .trailing).combined(with: .opacity),
+                    removal: .move(edge: .leading).combined(with: .opacity)
+                ))
+                .id(currentPage)
+
+                // Bottom navigation
+                bottomBar
             }
         }
-        .frame(width: 640, height: 480)
+        .animation(.easeInOut(duration: 0.35), value: currentPage)
+    }
+
+    // MARK: - Bottom Bar
+
+    private var bottomBar: some View {
+        HStack {
+            // Page indicators
+            HStack(spacing: 8) {
+                ForEach(0..<totalPages, id: \.self) { i in
+                    Capsule()
+                        .fill(i == currentPage ? MoleColors.accent : Color.white.opacity(0.15))
+                        .frame(width: i == currentPage ? 24 : 8, height: 8)
+                        .animation(.spring(response: 0.35), value: currentPage)
+                }
+            }
+
+            Spacer()
+
+            if currentPage < totalPages - 1 {
+                HStack(spacing: 16) {
+                    Button("Skip") {
+                        completeOnboarding()
+                    }
+                    .buttonStyle(.plain)
+                    .foregroundStyle(.white.opacity(0.3))
+                    .font(.subheadline)
+
+                    Button {
+                        currentPage += 1
+                    } label: {
+                        HStack(spacing: 5) {
+                            Text("Continue")
+                                .fontWeight(.semibold)
+                            Image(systemName: "arrow.right")
+                                .font(.system(size: 11, weight: .semibold))
+                        }
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 22)
+                        .padding(.vertical, 9)
+                        .background(MoleColors.accent)
+                        .clipShape(Capsule())
+                    }
+                    .buttonStyle(.plain)
+                }
+            } else {
+                Button {
+                    completeOnboarding()
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "arrow.right.circle.fill")
+                        Text("Get Started")
+                            .fontWeight(.bold)
+                    }
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 28)
+                    .padding(.vertical, 10)
+                    .background(MoleColors.success)
+                    .clipShape(Capsule())
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .padding(.horizontal, 40)
+        .padding(.bottom, 32)
     }
 
     // MARK: - Page 1: Welcome
 
     private var welcomePage: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 28) {
             Spacer()
 
-            MoleLogo(size: 80)
-                .shadow(color: MoleColors.accent.opacity(0.4), radius: 20, y: 8)
-                .pulseEffect()
+            MoleLogo(size: 88)
+                .shadow(color: MoleColors.accent.opacity(0.5), radius: 30, y: 10)
 
-            Text("Welcome to MacMartin")
-                .font(.system(size: 28, weight: .bold, design: .rounded))
-                .foregroundStyle(.white)
+            VStack(spacing: 10) {
+                Text("Welcome to")
+                    .font(.title3)
+                    .foregroundStyle(.white.opacity(0.5))
+                Text("MacMartin")
+                    .font(.system(size: 36, weight: .bold, design: .rounded))
+                    .foregroundStyle(.white)
+            }
 
-            Text("Your Mac's best friend. Clean, optimize, and monitor\nyour system — all in one app.")
+            Text("Clean, optimize, and monitor your Mac.\nAll in one beautiful app.")
                 .font(.body)
-                .foregroundStyle(.white.opacity(0.6))
+                .foregroundStyle(.white.opacity(0.5))
                 .multilineTextAlignment(.center)
                 .lineSpacing(4)
 
-            HStack(spacing: 24) {
-                welcomeStat(value: "11", label: "Tools")
-                welcomeStat(value: "24/7", label: "Monitoring")
-                welcomeStat(value: "1-Click", label: "Cleanup")
+            HStack(spacing: 32) {
+                statBadge(value: "11", label: "Tools", icon: "wrench.and.screwdriver")
+                statBadge(value: "24/7", label: "Monitor", icon: "heart.text.square")
+                statBadge(value: "1-Click", label: "Clean", icon: "sparkles")
             }
             .padding(.top, 8)
 
             Spacer()
+            Spacer()
         }
-        .padding(40)
     }
 
-    private func welcomeStat(value: String, label: String) -> some View {
-        VStack(spacing: 4) {
+    private func statBadge(value: String, label: String, icon: String) -> some View {
+        VStack(spacing: 8) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(Color.white.opacity(0.04))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .stroke(Color.white.opacity(0.06), lineWidth: 0.5)
+                    )
+                    .frame(width: 60, height: 60)
+                Image(systemName: icon)
+                    .font(.system(size: 20))
+                    .foregroundStyle(MoleColors.accent)
+            }
             Text(value)
-                .font(.system(size: 20, weight: .bold, design: .rounded))
-                .foregroundStyle(MoleColors.accent)
+                .font(.system(size: 15, weight: .bold, design: .rounded))
+                .foregroundStyle(.white)
             Text(label)
-                .font(.caption)
-                .foregroundStyle(.white.opacity(0.4))
+                .font(.caption2)
+                .foregroundStyle(.white.opacity(0.35))
         }
     }
 
     // MARK: - Page 2: Features
 
     private var featuresPage: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 24) {
             Spacer()
 
-            Text("Everything you need")
-                .font(.system(size: 24, weight: .bold, design: .rounded))
-                .foregroundStyle(.white)
+            VStack(spacing: 8) {
+                Text("Everything you need")
+                    .font(.system(size: 26, weight: .bold, design: .rounded))
+                    .foregroundStyle(.white)
+                Text("Powerful tools, zero complexity")
+                    .font(.subheadline)
+                    .foregroundStyle(.white.opacity(0.4))
+            }
 
             LazyVGrid(columns: [
-                GridItem(.flexible(), spacing: 12),
-                GridItem(.flexible(), spacing: 12),
-            ], spacing: 12) {
-                featureCard(icon: "trash", title: "Smart Clean", desc: "Remove caches & junk", color: .blue)
-                featureCard(icon: "heart.text.square", title: "Live Status", desc: "CPU, RAM, disk, battery", color: .green)
-                featureCard(icon: "chart.pie", title: "Disk Analyzer", desc: "Find what's using space", color: .orange)
-                featureCard(icon: "xmark.app", title: "Uninstaller", desc: "Remove apps completely", color: .red)
-                featureCard(icon: "doc.on.doc", title: "Duplicates", desc: "Find duplicate files", color: .purple)
-                featureCard(icon: "eye.slash", title: "Privacy", desc: "Clear your traces", color: .pink)
+                GridItem(.flexible(), spacing: 10),
+                GridItem(.flexible(), spacing: 10),
+                GridItem(.flexible(), spacing: 10),
+            ], spacing: 10) {
+                featureCard(icon: "trash", title: "Clean", desc: "Caches & junk", color: .blue)
+                featureCard(icon: "heart.text.square", title: "Status", desc: "Live metrics", color: .green)
+                featureCard(icon: "chart.pie", title: "Analyze", desc: "Disk usage", color: .orange)
+                featureCard(icon: "xmark.app", title: "Uninstall", desc: "Remove apps", color: .red)
+                featureCard(icon: "doc.on.doc", title: "Duplicates", desc: "Find copies", color: .purple)
+                featureCard(icon: "eye.slash", title: "Privacy", desc: "Clear traces", color: .pink)
+                featureCard(icon: "power", title: "Startup", desc: "Login items", color: .cyan)
+                featureCard(icon: "arrow.triangle.2.circlepath.circle", title: "Updates", desc: "App versions", color: .teal)
+                featureCard(icon: "bell.badge", title: "Alerts", desc: "Smart notify", color: .yellow)
             }
-            .padding(.horizontal, 20)
+            .padding(.horizontal, 40)
 
             Spacer()
+            Spacer()
         }
-        .padding(30)
     }
 
     private func featureCard(icon: String, title: String, desc: String, color: Color) -> some View {
-        HStack(spacing: 10) {
+        VStack(spacing: 8) {
             ZStack {
-                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(color.opacity(0.15))
-                    .frame(width: 34, height: 34)
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .fill(color.opacity(0.12))
+                    .frame(width: 38, height: 38)
                 Image(systemName: icon)
-                    .font(.system(size: 14))
+                    .font(.system(size: 15))
                     .foregroundStyle(color)
             }
-            VStack(alignment: .leading, spacing: 2) {
-                Text(title)
-                    .font(.caption.bold())
-                    .foregroundStyle(.white)
-                Text(desc)
-                    .font(.caption2)
-                    .foregroundStyle(.white.opacity(0.4))
-            }
-            Spacer()
+            Text(title)
+                .font(.caption.bold())
+                .foregroundStyle(.white.opacity(0.9))
+            Text(desc)
+                .font(.system(size: 10))
+                .foregroundStyle(.white.opacity(0.3))
         }
-        .padding(10)
-        .background(Color.white.opacity(0.04))
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 12)
+        .background(Color.white.opacity(0.03))
         .overlay(
-            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .stroke(Color.white.opacity(0.06), lineWidth: 0.5)
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .stroke(Color.white.opacity(0.05), lineWidth: 0.5)
         )
-        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
     }
 
     // MARK: - Page 3: Pro Upsell
@@ -201,115 +246,141 @@ struct OnboardingView: View {
 
             ZStack {
                 Circle()
-                    .fill(Color.orange.opacity(0.1))
-                    .frame(width: 90, height: 90)
+                    .fill(
+                        RadialGradient(
+                            colors: [Color.orange.opacity(0.15), Color.clear],
+                            center: .center, startRadius: 0, endRadius: 60
+                        )
+                    )
+                    .frame(width: 120, height: 120)
                 Image(systemName: "sparkles")
-                    .font(.system(size: 36))
-                    .foregroundStyle(.orange)
+                    .font(.system(size: 40))
+                    .foregroundStyle(
+                        LinearGradient(colors: [.orange, .yellow], startPoint: .topLeading, endPoint: .bottomTrailing)
+                    )
             }
 
-            Text("Unlock MacMartin Pro")
-                .font(.system(size: 24, weight: .bold, design: .rounded))
-                .foregroundStyle(.white)
+            VStack(spacing: 8) {
+                HStack(spacing: 6) {
+                    Text("MacMartin")
+                        .font(.system(size: 26, weight: .bold, design: .rounded))
+                        .foregroundStyle(.white)
+                    ProBadge()
+                }
+                Text("Unlock the full toolkit")
+                    .font(.subheadline)
+                    .foregroundStyle(.white.opacity(0.4))
+            }
 
-            Text("Get full access to all tools and utilities.\nFree users get Clean + Status + Alerts.")
-                .font(.subheadline)
-                .foregroundStyle(.white.opacity(0.5))
-                .multilineTextAlignment(.center)
-                .lineSpacing(3)
+            // Pro features list
+            VStack(spacing: 6) {
+                proRow("Disk Analyzer & Duplicate Finder")
+                proRow("App Uninstaller & Update Checker")
+                proRow("Privacy Sweep & Startup Manager")
+                proRow("System Optimizer (14 tasks)")
+            }
+            .padding(.horizontal, 60)
 
             HStack(spacing: 16) {
-                proFeature("Disk Analyzer")
-                proFeature("Duplicate Finder")
-                proFeature("Privacy Sweep")
-                proFeature("Startup Manager")
-            }
-
-            HStack(spacing: 12) {
                 Button("Maybe Later") {
-                    withAnimation { currentPage += 1 }
+                    currentPage += 1
                 }
                 .buttonStyle(.plain)
-                .foregroundStyle(.white.opacity(0.4))
+                .foregroundStyle(.white.opacity(0.3))
                 .font(.subheadline)
 
                 Button {
                     license.showPaywall = true
                 } label: {
-                    HStack(spacing: 4) {
+                    HStack(spacing: 5) {
                         Image(systemName: "sparkles")
-                        Text("Upgrade Now")
+                            .font(.caption)
+                        Text("Upgrade to Pro")
                             .fontWeight(.semibold)
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 8)
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 22)
+                    .padding(.vertical, 9)
+                    .background(
+                        LinearGradient(colors: [.orange, Color(red: 1, green: 0.6, blue: 0.2)], startPoint: .leading, endPoint: .trailing)
+                    )
+                    .clipShape(Capsule())
                 }
-                .buttonStyle(.borderedProminent)
-                .tint(.orange)
+                .buttonStyle(.plain)
             }
             .padding(.top, 4)
 
             Spacer()
+            Spacer()
         }
-        .padding(40)
     }
 
-    private func proFeature(_ name: String) -> some View {
-        HStack(spacing: 4) {
-            Image(systemName: "checkmark")
-                .font(.system(size: 9, weight: .bold))
+    private func proRow(_ text: String) -> some View {
+        HStack(spacing: 8) {
+            Image(systemName: "checkmark.circle.fill")
+                .font(.system(size: 13))
                 .foregroundStyle(.orange)
-            Text(name)
-                .font(.caption)
-                .foregroundStyle(.white.opacity(0.5))
+            Text(text)
+                .font(.subheadline)
+                .foregroundStyle(.white.opacity(0.6))
+            Spacer()
         }
+        .padding(.vertical, 4)
     }
 
     // MARK: - Page 4: Ready
 
     private var readyPage: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 28) {
             Spacer()
 
             ZStack {
                 Circle()
-                    .fill(MoleColors.success.opacity(0.1))
-                    .frame(width: 100, height: 100)
+                    .fill(
+                        RadialGradient(
+                            colors: [MoleColors.success.opacity(0.15), Color.clear],
+                            center: .center, startRadius: 0, endRadius: 60
+                        )
+                    )
+                    .frame(width: 120, height: 120)
                 Image(systemName: "checkmark")
-                    .font(.system(size: 40, weight: .medium))
+                    .font(.system(size: 44, weight: .medium))
                     .foregroundStyle(MoleColors.success)
             }
 
-            Text("You're all set!")
-                .font(.system(size: 28, weight: .bold, design: .rounded))
-                .foregroundStyle(.white)
-
-            Text("MacMartin is ready. Check your menu bar for\nlive CPU and memory monitoring.")
-                .font(.body)
-                .foregroundStyle(.white.opacity(0.5))
-                .multilineTextAlignment(.center)
-                .lineSpacing(4)
+            VStack(spacing: 8) {
+                Text("You're all set!")
+                    .font(.system(size: 28, weight: .bold, design: .rounded))
+                    .foregroundStyle(.white)
+                Text("MacMartin is running. Your Mac is in good hands.")
+                    .font(.body)
+                    .foregroundStyle(.white.opacity(0.45))
+            }
 
             HStack(spacing: 20) {
-                readyHint(icon: "cpu", text: "Menu bar widget active")
-                readyHint(icon: "bell.badge", text: "Smart alerts enabled")
+                readyBadge(icon: "cpu", text: "Menu bar active")
+                readyBadge(icon: "bell.badge", text: "Alerts enabled")
+                readyBadge(icon: "shield.checkered", text: "Safe & private")
             }
-            .padding(.top, 8)
 
             Spacer()
+            Spacer()
         }
-        .padding(40)
     }
 
-    private func readyHint(icon: String, text: String) -> some View {
+    private func readyBadge(icon: String, text: String) -> some View {
         HStack(spacing: 6) {
             Image(systemName: icon)
                 .font(.caption)
                 .foregroundStyle(MoleColors.accent)
             Text(text)
                 .font(.caption)
-                .foregroundStyle(.white.opacity(0.5))
+                .foregroundStyle(.white.opacity(0.4))
         }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
+        .background(Color.white.opacity(0.04))
+        .clipShape(Capsule())
     }
 
     // MARK: - Action

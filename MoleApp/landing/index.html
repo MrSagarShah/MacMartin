@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MacMartin — Your Mac's Best Friend</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #0a0e1a;
+    color: #e0e4f0;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---- NAV ---- */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(10, 14, 26, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(102, 127, 255, 0.1);
+  }
+  nav .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+  nav .logo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+  }
+  nav .logo span { color: #667fff; }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 28px;
+  }
+  nav ul li a {
+    color: #8a90a8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+  nav ul li a:hover { color: #fff; }
+
+  /* ---- BUTTONS ---- */
+  .btn {
+    display: inline-block;
+    padding: 14px 36px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(102, 127, 255, 0.3);
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #667fff, #5a6fe6);
+    color: #fff;
+  }
+  .btn-primary:hover { background: linear-gradient(135deg, #7a90ff, #667fff); }
+  .btn-pro {
+    background: linear-gradient(135deg, #ff8c42, #e67a30);
+    color: #fff;
+  }
+  .btn-pro:hover {
+    background: linear-gradient(135deg, #ffa05c, #ff8c42);
+    box-shadow: 0 8px 30px rgba(255, 140, 66, 0.3);
+  }
+  .btn-outline {
+    background: transparent;
+    color: #667fff;
+    border: 2px solid #667fff;
+  }
+  .btn-outline:hover {
+    background: rgba(102, 127, 255, 0.1);
+  }
+
+  /* ---- HERO ---- */
+  .hero {
+    padding: 140px 0 80px;
+    text-align: center;
+  }
+  .hero-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 50px;
+    background: rgba(102, 127, 255, 0.12);
+    color: #667fff;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 24px;
+    border: 1px solid rgba(102, 127, 255, 0.2);
+  }
+  .hero h1 {
+    font-size: clamp(2.8rem, 7vw, 4.5rem);
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .hero h1 span {
+    background: linear-gradient(135deg, #667fff, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p {
+    font-size: 1.25rem;
+    color: #8a90a8;
+    margin: 16px auto 36px;
+    max-width: 520px;
+  }
+  .hero-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .hero-screenshot {
+    margin: 60px auto 0;
+    max-width: 800px;
+    height: 420px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #121830, #1a2040);
+    border: 1px solid rgba(102, 127, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3a4060;
+    font-size: 1.1rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-screenshot::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 40%, rgba(102, 127, 255, 0.04), transparent 50%);
+  }
+
+  /* ---- SECTION ---- */
+  section { padding: 80px 0; }
+  .section-title {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .section-title h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+  .section-title p {
+    color: #8a90a8;
+    font-size: 1.05rem;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  /* ---- FEATURES GRID ---- */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .feature-card {
+    background: linear-gradient(145deg, rgba(18, 24, 48, 0.8), rgba(14, 18, 35, 0.8));
+    border: 1px solid rgba(102, 127, 255, 0.1);
+    border-radius: 16px;
+    padding: 28px 24px;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+  }
+  .feature-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(102, 127, 255, 0.25);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  }
+  .feature-icon {
+    font-size: 2rem;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .feature-card h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .feature-card p {
+    font-size: 0.88rem;
+    color: #7a80a0;
+    line-height: 1.5;
+  }
+
+  /* ---- COMPARISON ---- */
+  .comparison-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .plan-card {
+    border-radius: 16px;
+    padding: 36px 32px;
+    border: 1px solid rgba(102, 127, 255, 0.12);
+    background: linear-gradient(145deg, rgba(18, 24, 48, 0.8), rgba(14, 18, 35, 0.8));
+  }
+  .plan-card.pro {
+    border-color: rgba(255, 140, 66, 0.3);
+    background: linear-gradient(145deg, rgba(30, 22, 14, 0.6), rgba(14, 18, 35, 0.8));
+  }
+  .plan-card h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .plan-card .plan-price {
+    font-size: 0.95rem;
+    color: #8a90a8;
+    margin-bottom: 20px;
+  }
+  .plan-card .pro-label {
+    color: #ff8c42;
+  }
+  .plan-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .plan-card ul li {
+    font-size: 0.92rem;
+    color: #c0c4d8;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .plan-card ul li .check {
+    color: #667fff;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  .plan-card.pro ul li .check {
+    color: #ff8c42;
+  }
+  .plan-card ul li.disabled {
+    color: #3a4060;
+  }
+  .plan-card ul li.disabled .check {
+    color: #3a4060;
+  }
+
+  /* ---- PRICING ---- */
+  .pricing-box {
+    max-width: 480px;
+    margin: 0 auto;
+    text-align: center;
+    background: linear-gradient(145deg, rgba(30, 22, 14, 0.5), rgba(14, 18, 35, 0.8));
+    border: 1px solid rgba(255, 140, 66, 0.2);
+    border-radius: 20px;
+    padding: 48px 40px;
+  }
+  .pricing-box .price {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .pricing-box .price-sub {
+    color: #8a90a8;
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+  .pricing-box .price-note {
+    color: #667fff;
+    font-size: 0.88rem;
+    margin-bottom: 28px;
+  }
+  .pricing-box .crypto {
+    margin-top: 16px;
+    font-size: 0.85rem;
+    color: #5a6080;
+  }
+
+  /* ---- FOOTER ---- */
+  footer {
+    padding: 40px 0;
+    border-top: 1px solid rgba(102, 127, 255, 0.08);
+    text-align: center;
+  }
+  footer p {
+    font-size: 0.88rem;
+    color: #4a5070;
+  }
+  footer a {
+    color: #667fff;
+    text-decoration: none;
+  }
+  footer a:hover { text-decoration: underline; }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 768px) {
+    .features-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .comparison-wrapper {
+      grid-template-columns: 1fr;
+    }
+    .hero-screenshot {
+      height: 260px;
+    }
+    nav ul { gap: 16px; }
+    nav ul li a { font-size: 0.8rem; }
+  }
+  @media (max-width: 480px) {
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+    .hero-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+    .pricing-box { padding: 36px 24px; }
+    nav ul { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="container">
+    <a href="#" class="logo">Mac<span>Martin</span></a>
+    <ul>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#plans">Plans</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">macOS System Maintenance</div>
+    <h1>Meet <span>MacMartin</span></h1>
+    <p>Your Mac's best friend. Clean, optimize, and maintain your system with one powerful app.</p>
+    <div class="hero-buttons">
+      <a href="https://github.com/AuroraToolkit/AuroraCore/releases" class="btn btn-primary">Download Free</a>
+      <a href="#pricing" class="btn btn-outline">Get Pro</a>
+    </div>
+    <div class="hero-screenshot">
+      <span>[ App Screenshot ]</span>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section id="features">
+  <div class="container">
+    <div class="section-title">
+      <h2>Everything Your Mac Needs</h2>
+      <p>Nine powerful tools to keep your system fast, clean, and secure.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">🧹</span>
+        <h3>Clean</h3>
+        <p>Remove junk files, caches, and temporary data to free up valuable disk space.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📊</span>
+        <h3>Status</h3>
+        <p>Real-time system monitoring with CPU, memory, disk, and battery health at a glance.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🔍</span>
+        <h3>Analyze</h3>
+        <p>Deep disk analysis to find what's eating your storage with visual breakdowns.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📦</span>
+        <h3>Uninstall</h3>
+        <p>Completely remove apps and all their leftover files, preferences, and caches.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">⚡</span>
+        <h3>Optimize</h3>
+        <p>Tune your system for peak performance with smart memory and process management.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📑</span>
+        <h3>Duplicates</h3>
+        <p>Find and remove duplicate files wasting space across your drives.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🛡️</span>
+        <h3>Privacy</h3>
+        <p>Clear browsing data, app traces, and recent activity to protect your privacy.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🚀</span>
+        <h3>Startup</h3>
+        <p>Manage login items and launch agents to speed up your boot time.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🔄</span>
+        <h3>Updates</h3>
+        <p>Keep all your apps up to date with one-click update checking.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Free vs Pro -->
+<section id="plans">
+  <div class="container">
+    <div class="section-title">
+      <h2>Free vs Pro</h2>
+      <p>Start free, upgrade when you need the full toolkit.</p>
+    </div>
+    <div class="comparison-wrapper">
+      <div class="plan-card">
+        <h3>Free</h3>
+        <div class="plan-price">Always free</div>
+        <ul>
+          <li><span class="check">&#10003;</span> Clean</li>
+          <li><span class="check">&#10003;</span> Status</li>
+          <li><span class="check">&#10003;</span> Alerts</li>
+          <li class="disabled"><span class="check">&#x2013;</span> Analyze</li>
+          <li class="disabled"><span class="check">&#x2013;</span> Uninstall</li>
+          <li class="disabled"><span class="check">&#x2013;</span> Optimize</li>
+          <li class="disabled"><span class="check">&#x2013;</span> Duplicates</li>
+          <li class="disabled"><span class="check">&#x2013;</span> Privacy</li>
+          <li class="disabled"><span class="check">&#x2013;</span> Startup</li>
+          <li class="disabled"><span class="check">&#x2013;</span> Updates</li>
+        </ul>
+      </div>
+      <div class="plan-card pro">
+        <h3>Pro <span class="pro-label">&#9733;</span></h3>
+        <div class="plan-price">One-time purchase</div>
+        <ul>
+          <li><span class="check">&#10003;</span> Clean</li>
+          <li><span class="check">&#10003;</span> Status</li>
+          <li><span class="check">&#10003;</span> Alerts</li>
+          <li><span class="check">&#10003;</span> Analyze</li>
+          <li><span class="check">&#10003;</span> Uninstall</li>
+          <li><span class="check">&#10003;</span> Optimize</li>
+          <li><span class="check">&#10003;</span> Duplicates</li>
+          <li><span class="check">&#10003;</span> Privacy</li>
+          <li><span class="check">&#10003;</span> Startup</li>
+          <li><span class="check">&#10003;</span> Updates</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-title">
+      <h2>Simple Pricing</h2>
+      <p>Pay once, own it forever. No subscriptions.</p>
+    </div>
+    <div class="pricing-box">
+      <div class="price">$29</div>
+      <div class="price-sub">One-time payment &middot; Lifetime license</div>
+      <div class="price-note">Includes all future updates</div>
+      <a href="#" class="btn btn-pro">Buy Pro Now</a>
+      <div class="crypto">Also accept crypto payments &mdash; BTC, ETH, USDT</div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>Made by <a href="https://krakelabsindia.com" target="_blank" rel="noopener">Krakel Labs India</a></p>
+    <p style="margin-top: 8px;">&copy; 2026 MacMartin. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>

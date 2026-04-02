@@ -1,9 +1,12 @@
 import SwiftUI
+import AppKit
 
 struct MenuBarView: View {
     @EnvironmentObject private var monitor: MenuBarMonitor
     @EnvironmentObject private var mole: MoleService
     @State private var isCleaningQuick = false
+    @State private var isPurgingRAM = false
+    @State private var lastCleaned: String = UserDefaults.standard.string(forKey: "macmartin_last_cleaned") ?? "Never"
 
     var body: some View {
         VStack(spacing: 0) {
@@ -51,6 +54,19 @@ struct MenuBarView: View {
             }
             .padding(14)
 
+            // Last cleaned
+            HStack {
+                Image(systemName: "clock")
+                    .font(.system(size: 9))
+                    .foregroundStyle(.tertiary)
+                Text("Last cleaned: \(lastCleaned)")
+                    .font(.caption2)
+                    .foregroundStyle(.tertiary)
+                Spacer()
+            }
+            .padding(.horizontal, 14)
+            .padding(.bottom, 8)
+
             Divider()
 
             // Quick Actions
@@ -60,6 +76,11 @@ struct MenuBarView: View {
                 }
                 .disabled(isCleaningQuick)
 
+                quickAction(icon: "memorychip", label: isPurgingRAM ? "Purging..." : "Free Up RAM", color: .purple) {
+                    purgeRAM()
+                }
+                .disabled(isPurgingRAM)
+
                 quickAction(icon: "arrow.clockwise", label: "Refresh", color: .secondary) {
                     monitor.poll()
                 }
@@ -68,8 +89,11 @@ struct MenuBarView: View {
 
                 quickAction(icon: "macwindow", label: "Open MacMartin", color: MoleColors.accent) {
                     NSApp.activate(ignoringOtherApps: true)
-                    if let window = NSApp.windows.first(where: { $0.title.contains("MacMartin") || $0.isKeyWindow }) {
-                        window.makeKeyAndOrderFront(nil)
+                    for window in NSApp.windows {
+                        if window.canBecomeMain {
+                            window.makeKeyAndOrderFront(nil)
+                            break
+                        }
                     }
                 }
 
@@ -146,31 +170,56 @@ struct MenuBarView: View {
         isCleaningQuick = true
         Task {
             _ = try? await mole.runCleanAll()
+            let formatter = DateFormatter()
+            formatter.dateStyle = .short
+            formatter.timeStyle = .short
+            lastCleaned = formatter.string(from: Date())
+            UserDefaults.standard.set(lastCleaned, forKey: "macmartin_last_cleaned")
             isCleaningQuick = false
+        }
+    }
+
+    private func purgeRAM() {
+        isPurgingRAM = true
+        Task {
+            // macOS memory pressure relief — runs `memory_pressure` or `purge` if available
+            let process = Process()
+            process.executableURL = URL(fileURLWithPath: "/usr/bin/memory_pressure")
+            process.arguments = ["-l", "warn"]
+            let pipe = Pipe()
+            process.standardOutput = pipe
+            process.standardError = pipe
+            try? process.run()
+            process.waitUntilExit()
+            monitor.poll()
+            isPurgingRAM = false
         }
     }
 }
 
-// MARK: - Menu Bar Label (shown in the macOS top bar)
+// MARK: - Menu Bar Label
 
 struct MenuBarLabel: View {
     @EnvironmentObject private var monitor: MenuBarMonitor
 
     var body: some View {
         HStack(spacing: 6) {
-            // CPU
             HStack(spacing: 2) {
                 Image(systemName: "cpu")
                     .font(.system(size: 9))
                 Text(String(format: "%.0f%%", monitor.cpuUsage))
                     .font(.system(size: 11, weight: .medium, design: .monospaced))
             }
-
-            // Memory
             HStack(spacing: 2) {
                 Image(systemName: "memorychip")
                     .font(.system(size: 9))
                 Text(String(format: "%.0f%%", monitor.memoryPercent))
+                    .font(.system(size: 11, weight: .medium, design: .monospaced))
+            }
+            HStack(spacing: 2) {
+                Image(systemName: "internaldrive")
+                    .font(.system(size: 9))
+                Text(monitor.diskFree)
                     .font(.system(size: 11, weight: .medium, design: .monospaced))
             }
         }

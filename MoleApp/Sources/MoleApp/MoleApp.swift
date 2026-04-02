@@ -1,4 +1,5 @@
 import SwiftUI
+import UserNotifications
 
 @main
 struct MoleApp: App {
@@ -21,6 +22,20 @@ struct MoleApp: App {
         }
         .windowStyle(.titleBar)
         .defaultSize(width: 960, height: 640)
+        .commands {
+            CommandMenu("Navigate") {
+                Button("Clean") { NotificationCenter.default.post(name: .switchTab, object: SidebarTab.clean) }
+                    .keyboardShortcut("1")
+                Button("Status") { NotificationCenter.default.post(name: .switchTab, object: SidebarTab.status) }
+                    .keyboardShortcut("2")
+                Button("Analyze") { NotificationCenter.default.post(name: .switchTab, object: SidebarTab.analyze) }
+                    .keyboardShortcut("3")
+                Button("Uninstall") { NotificationCenter.default.post(name: .switchTab, object: SidebarTab.uninstall) }
+                    .keyboardShortcut("4")
+                Button("Optimize") { NotificationCenter.default.post(name: .switchTab, object: SidebarTab.optimize) }
+                    .keyboardShortcut("5")
+            }
+        }
 
         // Menu bar widget
         MenuBarExtra {
@@ -64,6 +79,12 @@ struct ContentView: View {
         }
         .onAppear {
             updater.checkForUpdates()
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { _, _ in }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .switchTab)) { notif in
+            if let tab = notif.object as? SidebarTab {
+                selectedTab = tab
+            }
         }
     }
 
@@ -82,6 +103,7 @@ struct ContentView: View {
             case .privacy: PrivacySweepView()
             case .startup: StartupManagerView()
             case .updates: AppUpdatesView()
+            case .storage: StorageBreakdownView()
             case .alerts: AlertsView()
             case .about: AboutView()
             }

@@ -1,5 +1,11 @@
 import Foundation
 
+// MARK: - Notifications
+
+extension Notification.Name {
+    static let switchTab = Notification.Name("macmartin.switchTab")
+}
+
 // MARK: - Sidebar
 
 enum SidebarTab: String, CaseIterable, Identifiable {
@@ -12,6 +18,7 @@ enum SidebarTab: String, CaseIterable, Identifiable {
     case privacy = "Privacy"
     case startup = "Startup"
     case updates = "Updates"
+    case storage = "Storage"
     case alerts = "Alerts"
     case about = "About"
 
@@ -28,6 +35,7 @@ enum SidebarTab: String, CaseIterable, Identifiable {
         case .privacy: return "eye.slash"
         case .startup: return "power"
         case .updates: return "arrow.triangle.2.circlepath.circle"
+        case .storage: return "chart.pie.fill"
         case .alerts: return "bell.badge"
         case .about: return "info.circle"
         }
@@ -36,7 +44,7 @@ enum SidebarTab: String, CaseIterable, Identifiable {
     var isPro: Bool {
         switch self {
         case .analyze, .uninstall, .optimize, .duplicates, .privacy, .startup, .updates: return true
-        case .clean, .status, .alerts, .about: return false
+        case .clean, .status, .storage, .alerts, .about: return false
         }
     }
 
@@ -51,6 +59,7 @@ enum SidebarTab: String, CaseIterable, Identifiable {
         case .privacy: return "Clear browser history, recent files, and traces"
         case .startup: return "Control what launches when you log in"
         case .updates: return "Check installed apps for available updates"
+        case .storage: return "Visual breakdown of what's using your disk"
         case .alerts: return "Get notified when system resources are critical"
         case .about: return "About Krakel Labs"
         }
@@ -62,7 +71,7 @@ enum SidebarTab: String, CaseIterable, Identifiable {
         case .clean, .status: return "Essentials"
         case .analyze, .uninstall, .optimize: return "Tools"
         case .duplicates, .privacy, .startup, .updates: return "Utilities"
-        case .alerts, .about: return "More"
+        case .storage, .alerts, .about: return "More"
         }
     }
 
