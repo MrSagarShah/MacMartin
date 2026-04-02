@@ -6,6 +6,7 @@ struct MoleApp: App {
     @StateObject private var licenseManager = LicenseManager()
     @StateObject private var updateManager = UpdateManager()
     @StateObject private var menuBarMonitor = MenuBarMonitor()
+    @StateObject private var alertManager = AlertManager()
 
     var body: some Scene {
         // Main window
@@ -15,6 +16,7 @@ struct MoleApp: App {
                 .environmentObject(licenseManager)
                 .environmentObject(updateManager)
                 .environmentObject(menuBarMonitor)
+                .environmentObject(alertManager)
                 .frame(minWidth: 800, minHeight: 560)
         }
         .windowStyle(.titleBar)
@@ -61,31 +63,22 @@ struct ContentView: View {
 
     @ViewBuilder
     private var detailView: some View {
-        switch selectedTab {
-        case .clean:
-            CleanView()
-        case .status:
-            StatusView()
-        case .analyze:
-            if license.tier == .pro {
-                AnalyzeView()
-            } else {
-                LockedFeatureView(tab: .analyze)
+        if selectedTab.isPro && license.tier == .free {
+            LockedFeatureView(tab: selectedTab)
+        } else {
+            switch selectedTab {
+            case .clean: CleanView()
+            case .status: StatusView()
+            case .analyze: AnalyzeView()
+            case .uninstall: UninstallView()
+            case .optimize: OptimizeView()
+            case .duplicates: DuplicateFinderView()
+            case .privacy: PrivacySweepView()
+            case .startup: StartupManagerView()
+            case .updates: AppUpdatesView()
+            case .alerts: AlertsView()
+            case .about: AboutView()
             }
-        case .uninstall:
-            if license.tier == .pro {
-                UninstallView()
-            } else {
-                LockedFeatureView(tab: .uninstall)
-            }
-        case .optimize:
-            if license.tier == .pro {
-                OptimizeView()
-            } else {
-                LockedFeatureView(tab: .optimize)
-            }
-        case .about:
-            AboutView()
         }
     }
 }

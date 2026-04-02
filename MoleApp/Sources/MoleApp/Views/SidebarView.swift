@@ -5,21 +5,27 @@ struct SidebarView: View {
     @EnvironmentObject private var license: LicenseManager
 
     var body: some View {
-        List(SidebarTab.allCases, selection: $selection) { tab in
-            HStack {
-                Label(tab.rawValue, systemImage: tab.icon)
-                Spacer()
-                if tab.isPro && license.tier == .free {
-                    Image(systemName: "lock.fill")
-                        .font(.system(size: 9))
-                        .foregroundStyle(.tertiary)
+        List(selection: $selection) {
+            ForEach(SidebarTab.sections, id: \.0) { section, tabs in
+                Section(section) {
+                    ForEach(tabs) { tab in
+                        HStack(spacing: 0) {
+                            Label(tab.rawValue, systemImage: tab.icon)
+                            Spacer()
+                            if tab.isPro && license.tier == .free {
+                                Image(systemName: "lock.fill")
+                                    .font(.system(size: 8))
+                                    .foregroundStyle(.tertiary)
+                            }
+                        }
+                        .tag(tab)
+                        .font(.subheadline)
+                    }
                 }
             }
-            .tag(tab)
-            .font(.subheadline)
         }
         .listStyle(.sidebar)
-        .navigationSplitViewColumnWidth(min: 160, ideal: 180)
+        .navigationSplitViewColumnWidth(min: 170, ideal: 190)
         .safeAreaInset(edge: .top) {
             SidebarHeader()
                 .padding(.bottom, 4)

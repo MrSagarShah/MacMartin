@@ -4,10 +4,15 @@ import Foundation
 
 enum SidebarTab: String, CaseIterable, Identifiable {
     case clean = "Clean"
+    case status = "Status"
+    case analyze = "Analyze"
     case uninstall = "Uninstall"
     case optimize = "Optimize"
-    case analyze = "Analyze"
-    case status = "Status"
+    case duplicates = "Duplicates"
+    case privacy = "Privacy"
+    case startup = "Startup"
+    case updates = "Updates"
+    case alerts = "Alerts"
     case about = "About"
 
     var id: String { rawValue }
@@ -15,18 +20,23 @@ enum SidebarTab: String, CaseIterable, Identifiable {
     var icon: String {
         switch self {
         case .clean: return "trash"
+        case .status: return "heart.text.square"
+        case .analyze: return "chart.pie"
         case .uninstall: return "xmark.app"
         case .optimize: return "gauge.with.dots.needle.33percent"
-        case .analyze: return "chart.pie"
-        case .status: return "heart.text.square"
+        case .duplicates: return "doc.on.doc"
+        case .privacy: return "eye.slash"
+        case .startup: return "power"
+        case .updates: return "arrow.triangle.2.circlepath.circle"
+        case .alerts: return "bell.badge"
         case .about: return "info.circle"
         }
     }
 
     var isPro: Bool {
         switch self {
-        case .analyze, .uninstall, .optimize: return true
-        case .clean, .status, .about: return false
+        case .analyze, .uninstall, .optimize, .duplicates, .privacy, .startup, .updates: return true
+        case .clean, .status, .alerts, .about: return false
         }
     }
 
@@ -37,7 +47,30 @@ enum SidebarTab: String, CaseIterable, Identifiable {
         case .analyze: return "Explore disk usage and find large files"
         case .uninstall: return "Completely remove apps and their leftovers"
         case .optimize: return "Tune system performance with 14 optimizations"
+        case .duplicates: return "Find and remove duplicate files wasting space"
+        case .privacy: return "Clear browser history, recent files, and traces"
+        case .startup: return "Control what launches when you log in"
+        case .updates: return "Check installed apps for available updates"
+        case .alerts: return "Get notified when system resources are critical"
         case .about: return "About Krakel Labs"
+        }
+    }
+
+    /// Group tabs into sidebar sections.
+    var section: String {
+        switch self {
+        case .clean, .status: return "Essentials"
+        case .analyze, .uninstall, .optimize: return "Tools"
+        case .duplicates, .privacy, .startup, .updates: return "Utilities"
+        case .alerts, .about: return "More"
+        }
+    }
+
+    static var sections: [(String, [SidebarTab])] {
+        let order = ["Essentials", "Tools", "Utilities", "More"]
+        return order.compactMap { section in
+            let tabs = allCases.filter { $0.section == section }
+            return tabs.isEmpty ? nil : (section, tabs)
         }
     }
 }
