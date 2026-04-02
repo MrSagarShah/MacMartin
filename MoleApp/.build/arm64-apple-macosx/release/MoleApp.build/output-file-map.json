@@ -1,0 +1,115 @@
+{
+  "": {
+    "dependencies": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/MoleApp.d",
+    "object": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/MoleApp.o",
+    "swift-dependencies": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/master.swiftdeps"
+  },
+  "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Models.swift": {
+    "object": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/Models.swift.o",
+    "swiftmodule": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/Models~partial.swiftmodule",
+    "swift-dependencies": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/Models.swiftdeps",
+    "diagnostics": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/Models.dia"
+  },
+  "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/MoleApp.swift": {
+    "object": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/MoleApp.swift.o",
+    "swiftmodule": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/MoleApp~partial.swiftmodule",
+    "swift-dependencies": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/MoleApp.swiftdeps",
+    "diagnostics": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/MoleApp.dia"
+  },
+  "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Services/LicenseManager.swift": {
+    "object": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/LicenseManager.swift.o",
+    "swiftmodule": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/LicenseManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/LicenseManager.swiftdeps",
+    "diagnostics": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/LicenseManager.dia"
+  },
+  "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Services/MenuBarMonitor.swift": {
+    "object": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/MenuBarMonitor.swift.o",
+    "swiftmodule": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/MenuBarMonitor~partial.swiftmodule",
+    "swift-dependencies": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/MenuBarMonitor.swiftdeps",
+    "diagnostics": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/MenuBarMonitor.dia"
+  },
+  "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Services/MoleService.swift": {
+    "object": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/MoleService.swift.o",
+    "swiftmodule": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/MoleService~partial.swiftmodule",
+    "swift-dependencies": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/MoleService.swiftdeps",
+    "diagnostics": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/MoleService.dia"
+  },
+  "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Services/UpdateManager.swift": {
+    "object": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/UpdateManager.swift.o",
+    "swiftmodule": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/UpdateManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/UpdateManager.swiftdeps",
+    "diagnostics": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/UpdateManager.dia"
+  },
+  "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/AboutView.swift": {
+    "object": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/AboutView.swift.o",
+    "swiftmodule": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/AboutView~partial.swiftmodule",
+    "swift-dependencies": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/AboutView.swiftdeps",
+    "diagnostics": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/AboutView.dia"
+  },
+  "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/AnalyzeView.swift": {
+    "object": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/AnalyzeView.swift.o",
+    "swiftmodule": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/AnalyzeView~partial.swiftmodule",
+    "swift-dependencies": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/AnalyzeView.swiftdeps",
+    "diagnostics": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/AnalyzeView.dia"
+  },
+  "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/AnimationModifiers.swift": {
+    "object": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/AnimationModifiers.swift.o",
+    "swiftmodule": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/AnimationModifiers~partial.swiftmodule",
+    "swift-dependencies": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/AnimationModifiers.swiftdeps",
+    "diagnostics": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/AnimationModifiers.dia"
+  },
+  "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/BrandingView.swift": {
+    "object": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/BrandingView.swift.o",
+    "swiftmodule": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/BrandingView~partial.swiftmodule",
+    "swift-dependencies": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/BrandingView.swiftdeps",
+    "diagnostics": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/BrandingView.dia"
+  },
+  "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/CleanView.swift": {
+    "object": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/CleanView.swift.o",
+    "swiftmodule": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/CleanView~partial.swiftmodule",
+    "swift-dependencies": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/CleanView.swiftdeps",
+    "diagnostics": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/CleanView.dia"
+  },
+  "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/MenuBarView.swift": {
+    "object": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/MenuBarView.swift.o",
+    "swiftmodule": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/MenuBarView~partial.swiftmodule",
+    "swift-dependencies": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/MenuBarView.swiftdeps",
+    "diagnostics": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/MenuBarView.dia"
+  },
+  "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/OptimizeView.swift": {
+    "object": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/OptimizeView.swift.o",
+    "swiftmodule": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/OptimizeView~partial.swiftmodule",
+    "swift-dependencies": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/OptimizeView.swiftdeps",
+    "diagnostics": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/OptimizeView.dia"
+  },
+  "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/PaywallView.swift": {
+    "object": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/PaywallView.swift.o",
+    "swiftmodule": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/PaywallView~partial.swiftmodule",
+    "swift-dependencies": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/PaywallView.swiftdeps",
+    "diagnostics": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/PaywallView.dia"
+  },
+  "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/SidebarView.swift": {
+    "object": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/SidebarView.swift.o",
+    "swiftmodule": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/SidebarView~partial.swiftmodule",
+    "swift-dependencies": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/SidebarView.swiftdeps",
+    "diagnostics": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/SidebarView.dia"
+  },
+  "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/StatusView.swift": {
+    "object": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/StatusView.swift.o",
+    "swiftmodule": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/StatusView~partial.swiftmodule",
+    "swift-dependencies": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/StatusView.swiftdeps",
+    "diagnostics": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/StatusView.dia"
+  },
+  "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/Theme.swift": {
+    "object": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/Theme.swift.o",
+    "swiftmodule": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/Theme~partial.swiftmodule",
+    "swift-dependencies": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/Theme.swiftdeps",
+    "diagnostics": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/Theme.dia"
+  },
+  "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/UninstallView.swift": {
+    "object": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/UninstallView.swift.o",
+    "swiftmodule": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/UninstallView~partial.swiftmodule",
+    "swift-dependencies": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/UninstallView.swiftdeps",
+    "diagnostics": "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/release/MoleApp.build/UninstallView.dia"
+  }
+}

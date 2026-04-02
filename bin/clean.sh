@@ -151,6 +151,51 @@ PROJECT_ARTIFACT_HINT_ESTIMATE_SAMPLES=0
 PROJECT_ARTIFACT_HINT_ESTIMATE_PARTIAL=false
 declare -a DRY_RUN_SEEN_IDENTITIES=()
 
+# Scan-then-select mode: scan all categories first, let user pick which to clean.
+SCAN_MODE=false
+SELECT_MODE=true
+declare -a CATEGORY_NAMES=()
+declare -a CATEGORY_SIZES_KB=()
+declare -a CATEGORY_ITEMS=()
+declare -a SELECTED_SECTION_LIST=()
+CATEGORY_COUNT=0
+
+# shellcheck disable=SC2329
+scan_section_start() {
+    _scan_size_before=$total_size_cleaned
+    _scan_items_before=$files_cleaned
+}
+
+# shellcheck disable=SC2329
+scan_section_end() {
+    local name="$1"
+    local delta_size=$((total_size_cleaned - _scan_size_before))
+    local delta_items=$((files_cleaned - _scan_items_before))
+    CATEGORY_NAMES+=("$name")
+    CATEGORY_SIZES_KB+=("$delta_size")
+    CATEGORY_ITEMS+=("$delta_items")
+    CATEGORY_COUNT=$((CATEGORY_COUNT + 1))
+}
+
+# shellcheck disable=SC2329
+is_section_selected() {
+    local name="$1"
+    if [[ ${#SELECTED_SECTION_LIST[@]} -gt 0 ]]; then
+        for s in "${SELECTED_SECTION_LIST[@]}"; do
+            [[ "$s" == "$name" ]] && return 0
+        done
+    fi
+    return 1
+}
+
+# shellcheck disable=SC2329
+should_run_section() {
+    local name="$1"
+    [[ "$SELECT_MODE" != "true" ]] && return 0
+    [[ ${#SELECTED_SECTION_LIST[@]} -eq 0 ]] && return 0
+    is_section_selected "$name"
+}
+
 # shellcheck disable=SC2329
 note_activity() {
     if [[ "${TRACK_SECTION:-0}" == "1" ]]; then
@@ -197,13 +242,14 @@ trap 'cleanup INT 130; exit 130' INT
 trap 'cleanup TERM 143; exit 143' TERM
 
 start_section() {
+    [[ "$SCAN_MODE" == "true" ]] && return
     TRACK_SECTION=1
     SECTION_ACTIVITY=0
     CURRENT_SECTION="$1"
     echo ""
     echo -e "${PURPLE_BOLD}${ICON_ARROW} $1${NC}"
 
-    if [[ "$DRY_RUN" == "true" ]]; then
+    if [[ "$DRY_RUN" == "true" && "$SCAN_MODE" != "true" ]]; then
         ensure_user_file "$EXPORT_LIST_FILE"
         echo "" >> "$EXPORT_LIST_FILE"
         echo "=== $1 ===" >> "$EXPORT_LIST_FILE"
@@ -211,6 +257,7 @@ start_section() {
 }
 
 end_section() {
+    [[ "$SCAN_MODE" == "true" ]] && return
     stop_section_spinner
 
     if [[ "${TRACK_SECTION:-0}" == "1" && "${SECTION_ACTIVITY:-0}" == "0" ]]; then
@@ -406,7 +453,7 @@ safe_clean() {
     local permission_start=${MOLE_PERMISSION_DENIED_COUNT:-0}
 
     local show_scan_feedback=false
-    if [[ ${#targets[@]} -gt 20 && -t 1 ]]; then
+    if [[ "$SCAN_MODE" != "true" && ${#targets[@]} -gt 20 && -t 1 ]]; then
         show_scan_feedback=true
         stop_section_spinner
         MOLE_SPINNER_PREFIX="  " start_inline_spinner "Scanning ${#targets[@]} items..."
@@ -673,6 +720,16 @@ safe_clean() {
     fi
 
     if [[ $removed_any -eq 1 ]]; then
+        files_cleaned=$((files_cleaned + total_count))
+        total_size_cleaned=$((total_size_cleaned + total_size_kb))
+        total_items=$((total_items + 1))
+        note_activity
+
+        # In scan mode, only accumulate counters — skip all display and export.
+        if [[ "$SCAN_MODE" == "true" ]]; then
+            return 0
+        fi
+
         # Stop spinner before output
         stop_section_spinner
 
@@ -749,10 +806,6 @@ safe_clean() {
             line_color=$(cleanup_result_color_kb "$total_size_kb")
             echo -e "  ${line_color}${ICON_SUCCESS}${NC} $label${NC}, ${line_color}$size_human${NC}"
         fi
-        files_cleaned=$((files_cleaned + total_count))
-        total_size_cleaned=$((total_size_cleaned + total_size_kb))
-        total_items=$((total_items + 1))
-        note_activity
     fi
 
     return 0
@@ -870,6 +923,214 @@ EOF
         echo "  ${ICON_LIST} User-level cleanup will proceed automatically"
         echo ""
     fi
+}
+
+fast_dir_size_kb() {
+    local dir="$1"
+    [[ -d "$dir" ]] || { echo "0"; return; }
+    local raw
+    raw=$(du -skP "$dir" 2>/dev/null | head -1 | awk '{print $1}') || true
+    # Ensure numeric output.
+    if [[ "$raw" =~ ^[0-9]+$ ]]; then
+        echo "$raw"
+    else
+        echo "0"
+    fi
+}
+
+fast_category_scan() {
+    local name="$1"
+    shift
+    local total_kb=0
+    local item_count=0
+    for dir in "$@"; do
+        if [[ -d "$dir" ]]; then
+            local sz
+            sz=$(fast_dir_size_kb "$dir")
+            [[ -z "$sz" ]] && sz=0
+            total_kb=$((total_kb + sz))
+            item_count=$((item_count + 1))
+        fi
+    done
+    CATEGORY_NAMES+=("$name")
+    CATEGORY_SIZES_KB+=("$total_kb")
+    CATEGORY_ITEMS+=("$item_count")
+    CATEGORY_COUNT=$((CATEGORY_COUNT + 1))
+}
+
+scan_cleanup() {
+    SCAN_MODE=true
+    CATEGORY_NAMES=()
+    CATEGORY_SIZES_KB=()
+    CATEGORY_ITEMS=()
+    CATEGORY_COUNT=0
+
+    echo ""
+    echo -e "${BLUE}${ICON_ADMIN}${NC} $(detect_architecture) | Free space: $(get_free_space)"
+
+    if [[ -t 1 ]]; then
+        MOLE_SPINNER_PREFIX="  " start_inline_spinner "Scanning..."
+    fi
+
+    # Fast scan: check directory sizes directly instead of running full cleanup functions.
+    # This completes in seconds instead of minutes.
+
+    # 1. System (only if sudo available)
+    if [[ "$SYSTEM_CLEAN" == "true" ]]; then
+        fast_category_scan "System" \
+            /Library/Caches \
+            /private/tmp \
+            /private/var/tmp \
+            /Library/Logs/DiagnosticReports
+    fi
+
+    # 2. User essentials
+    fast_category_scan "User essentials" \
+        "$HOME/Library/Caches" \
+        "$HOME/Library/Logs" \
+        "$HOME/.Trash"
+
+    # 3. App caches
+    fast_category_scan "App caches" \
+        "$HOME/Library/Saved Application State" \
+        "$HOME/Library/Containers"
+
+    # 4. Browsers
+    fast_category_scan "Browsers" \
+        "$HOME/Library/Caches/com.apple.Safari" \
+        "$HOME/Library/Caches/Google/Chrome" \
+        "$HOME/Library/Caches/com.google.Chrome" \
+        "$HOME/Library/Caches/Firefox" \
+        "$HOME/Library/Caches/com.microsoft.edgemac" \
+        "$HOME/Library/Caches/com.brave.Browser" \
+        "$HOME/Library/Caches/com.operasoftware.Opera"
+
+    # 5. Cloud & Office
+    fast_category_scan "Cloud & Office" \
+        "$HOME/Library/Caches/com.microsoft.Word" \
+        "$HOME/Library/Caches/com.microsoft.Excel" \
+        "$HOME/Library/Caches/com.microsoft.Powerpoint" \
+        "$HOME/Library/Caches/com.microsoft.teams2" \
+        "$HOME/Library/Caches/com.dropbox.DropboxMacUpdate"
+
+    # 6. Developer tools
+    fast_category_scan "Developer tools" \
+        "$HOME/.npm" \
+        "$HOME/Library/Caches/pnpm" \
+        "$HOME/.bun" \
+        "$HOME/.cache/pip" \
+        "$HOME/Library/Caches/go-build" \
+        "$HOME/.cargo/registry" \
+        "$HOME/Library/Developer/Xcode/DerivedData" \
+        "$HOME/Library/Developer/Xcode/Archives" \
+        "$HOME/Library/Developer/CoreSimulator/Caches" \
+        "$HOME/Library/Caches/JetBrains"
+
+    # 7. Applications
+    fast_category_scan "Applications" \
+        "$HOME/Library/Caches/com.spotify.client" \
+        "$HOME/Library/Caches/com.hnc.Discord" \
+        "$HOME/Library/Caches/com.tinyspeck.slackmacgap" \
+        "$HOME/Library/Application Support/Slack/Cache" \
+        "$HOME/Library/Application Support/discord/Cache" \
+        "$HOME/Library/Caches/com.apple.dt.Xcode"
+
+    # 8. Virtualization
+    fast_category_scan "Virtualization" \
+        "$HOME/Library/Caches/com.vmware.fusion" \
+        "$HOME/Library/Caches/com.parallels.desktop.console" \
+        "$HOME/.vagrant.d/tmp"
+
+    # 9. Application Support (logs only — avoid scanning the full directory)
+    fast_category_scan "Application Support" \
+        "$HOME/Library/Application Support/CrashReporter" \
+        "$HOME/Library/Application Support/com.apple.sharedfilelist"
+
+    # 10. Orphaned data (check launch agents as a proxy)
+    fast_category_scan "Orphaned data" \
+        "$HOME/Library/LaunchAgents"
+
+    # 11. Apple Silicon
+    if [[ "$IS_M_SERIES" == "true" ]]; then
+        fast_category_scan "Apple Silicon" \
+            "$HOME/Library/Caches/com.apple.rosetta.update"
+    fi
+
+    # 13. Time Machine
+    fast_category_scan "Time Machine" \
+        "/Library/Logs/DiagnosticReports"
+
+    if [[ -t 1 ]]; then
+        stop_inline_spinner
+    fi
+
+    SCAN_MODE=false
+}
+
+show_category_selector() {
+    source "$SCRIPT_DIR/../lib/ui/menu_paginated.sh"
+
+    local -a menu_items=()
+    local -a menu_category_names=()
+    local -a size_parts=()
+
+    for ((i = 0; i < CATEGORY_COUNT; i++)); do
+        [[ ${CATEGORY_SIZES_KB[i]} -le 0 ]] && continue
+
+        local size_human
+        size_human=$(bytes_to_human_kb "${CATEGORY_SIZES_KB[i]}")
+        local items="${CATEGORY_ITEMS[i]}"
+
+        menu_items+=("${CATEGORY_NAMES[i]}  (${size_human}, ${items} items)")
+        menu_category_names+=("${CATEGORY_NAMES[i]}")
+        size_parts+=("${CATEGORY_SIZES_KB[i]}")
+    done
+
+    if [[ ${#menu_items[@]} -eq 0 ]]; then
+        echo ""
+        echo -e "  ${GREEN}${ICON_SUCCESS}${NC} System already clean, nothing to do"
+        return 1
+    fi
+
+    # Pre-select all categories by default.
+    local all_indices=""
+    for ((i = 0; i < ${#menu_items[@]}; i++)); do
+        [[ -n "$all_indices" ]] && all_indices+=","
+        all_indices+="$i"
+    done
+
+    local IFS=','
+    export MOLE_MENU_META_SIZEKB="${size_parts[*]}"
+    export MOLE_PRESELECTED_INDICES="$all_indices"
+
+    MOLE_SELECTION_RESULT=""
+    paginated_multi_select "Select categories to clean" "${menu_items[@]}"
+    local menu_rc=$?
+
+    unset MOLE_MENU_META_SIZEKB MOLE_PRESELECTED_INDICES
+
+    if [[ $menu_rc -ne 0 || -z "$MOLE_SELECTION_RESULT" ]]; then
+        echo ""
+        echo -e "  ${GRAY}No categories selected, nothing to clean${NC}"
+        return 1
+    fi
+
+    # Map selected indices back to category names.
+    SELECTED_SECTION_LIST=()
+    IFS=',' read -r -a selected_indices <<< "$MOLE_SELECTION_RESULT"
+    for idx in "${selected_indices[@]}"; do
+        if [[ "$idx" =~ ^[0-9]+$ && $idx -lt ${#menu_category_names[@]} ]]; then
+            SELECTED_SECTION_LIST+=("${menu_category_names[idx]}")
+        fi
+    done
+
+    if [[ ${#SELECTED_SECTION_LIST[@]} -eq 0 ]]; then
+        echo ""
+        echo -e "  ${GRAY}No categories selected, nothing to clean${NC}"
+        return 1
+    fi
+
+    return 0
 }
 
 perform_cleanup() {
@@ -999,7 +1260,7 @@ perform_cleanup() {
         end_section
     else
         # ===== 1. System =====
-        if [[ "$SYSTEM_CLEAN" == "true" ]]; then
+        if [[ "$SYSTEM_CLEAN" == "true" ]] && should_run_section "System"; then
             start_section "System"
             clean_deep_system
             clean_local_snapshots
@@ -1014,56 +1275,76 @@ perform_cleanup() {
         fi
 
         # ===== 2. User essentials =====
-        start_section "User essentials"
-        clean_user_essentials
-        clean_finder_metadata
-        end_section
+        if should_run_section "User essentials"; then
+            start_section "User essentials"
+            clean_user_essentials
+            clean_finder_metadata
+            end_section
+        fi
 
         # ===== 3. App caches (merged sandboxed and standard app caches) =====
-        start_section "App caches"
-        clean_app_caches
-        end_section
+        if should_run_section "App caches"; then
+            start_section "App caches"
+            clean_app_caches
+            end_section
+        fi
 
         # ===== 4. Browsers =====
-        start_section "Browsers"
-        clean_browsers
-        end_section
+        if should_run_section "Browsers"; then
+            start_section "Browsers"
+            clean_browsers
+            end_section
+        fi
 
         # ===== 5. Cloud & Office =====
-        start_section "Cloud & Office"
-        clean_cloud_storage
-        clean_office_applications
-        end_section
+        if should_run_section "Cloud & Office"; then
+            start_section "Cloud & Office"
+            clean_cloud_storage
+            clean_office_applications
+            end_section
+        fi
 
         # ===== 6. Developer tools (merged CLI and GUI tooling) =====
-        start_section "Developer tools"
-        clean_developer_tools
-        end_section
+        if should_run_section "Developer tools"; then
+            start_section "Developer tools"
+            clean_developer_tools
+            end_section
+        fi
 
         # ===== 7. Applications =====
-        start_section "Applications"
-        clean_user_gui_applications
-        end_section
+        if should_run_section "Applications"; then
+            start_section "Applications"
+            clean_user_gui_applications
+            end_section
+        fi
 
         # ===== 8. Virtualization =====
-        start_section "Virtualization"
-        clean_virtualization_tools
-        end_section
+        if should_run_section "Virtualization"; then
+            start_section "Virtualization"
+            clean_virtualization_tools
+            end_section
+        fi
 
         # ===== 9. Application Support =====
-        start_section "Application Support"
-        clean_application_support_logs
-        end_section
+        if should_run_section "Application Support"; then
+            start_section "Application Support"
+            clean_application_support_logs
+            end_section
+        fi
 
         # ===== 10. Orphaned data =====
-        start_section "Orphaned data"
-        clean_orphaned_app_data
-        clean_orphaned_system_services
-        show_user_launch_agent_hint_notice
-        end_section
+        if should_run_section "Orphaned data"; then
+            start_section "Orphaned data"
+            clean_orphaned_app_data
+            clean_orphaned_system_services
+            show_user_launch_agent_hint_notice
+            end_section
+        fi
 
         # ===== 11. Apple Silicon =====
-        clean_apple_silicon_caches
+        if should_run_section "Apple Silicon"; then
+            clean_apple_silicon_caches
+        fi
 
         # ===== 12. Device backups =====
         start_section "Device backups"
@@ -1071,9 +1352,11 @@ perform_cleanup() {
         end_section
 
         # ===== 13. Time Machine =====
-        start_section "Time Machine"
-        clean_time_machine_failed_backups
-        end_section
+        if should_run_section "Time Machine"; then
+            start_section "Time Machine"
+            clean_time_machine_failed_backups
+            end_section
+        fi
 
         # ===== 14. Large files =====
         start_section "Large files"
@@ -1179,6 +1462,9 @@ perform_cleanup() {
 }
 
 main() {
+    local SCAN_JSON_MODE=false
+    local CATEGORIES_FILTER=""
+
     while [[ $# -gt 0 ]]; do
         case "$1" in
             "--help" | "-h")
@@ -1191,6 +1477,21 @@ main() {
             "--dry-run" | "-n")
                 DRY_RUN=true
                 export MOLE_DRY_RUN=1
+                ;;
+            "--no-select" | "--all")
+                SELECT_MODE=false
+                ;;
+            "--scan")
+                SCAN_JSON_MODE=true
+                ;;
+            "--categories")
+                shift
+                if [[ $# -eq 0 ]]; then
+                    echo "Missing categories for --categories" >&2
+                    exit 1
+                fi
+                CATEGORIES_FILTER="$1"
+                SELECT_MODE=false
                 ;;
             "--external")
                 shift
@@ -1209,7 +1510,67 @@ main() {
         shift
     done
 
+    # --scan: JSON output of scannable categories, then exit.
+    # All non-JSON output (start_cleanup, scan_cleanup) goes to stderr.
+    if [[ "$SCAN_JSON_MODE" == "true" ]]; then
+        SELECT_MODE=false
+        start_cleanup >&2
+        scan_cleanup >&2
+
+        # Output JSON to stdout.
+        local arch free_sp
+        arch=$(detect_architecture)
+        free_sp=$(get_free_space)
+        printf '{\n  "architecture": "%s",\n  "free_space": "%s",\n  "categories": [\n' \
+            "$arch" "$free_sp"
+        local first=true
+        local scan_total_kb=0
+        for ((i = 0; i < CATEGORY_COUNT; i++)); do
+            scan_total_kb=$((scan_total_kb + CATEGORY_SIZES_KB[i]))
+            [[ "$first" == "true" ]] && first=false || printf ',\n'
+            printf '    {"name": "%s", "size_kb": %d, "items": %d}' \
+                "${CATEGORY_NAMES[i]}" "${CATEGORY_SIZES_KB[i]}" "${CATEGORY_ITEMS[i]}"
+        done
+        printf '\n  ],\n  "total_size_kb": %d\n}\n' "$scan_total_kb"
+        exit 0
+    fi
+
+    # --categories: populate SELECTED_SECTION_LIST from comma-separated names.
+    if [[ -n "$CATEGORIES_FILTER" ]]; then
+        SELECTED_SECTION_LIST=()
+        IFS=',' read -r -a _cat_arr <<< "$CATEGORIES_FILTER"
+        for cat in "${_cat_arr[@]}"; do
+            # Trim leading/trailing whitespace.
+            cat="${cat#"${cat%%[![:space:]]*}"}"
+            cat="${cat%"${cat##*[![:space:]]}"}"
+            [[ -n "$cat" ]] && SELECTED_SECTION_LIST+=("$cat")
+        done
+        SELECT_MODE=true
+    fi
+
+    # Non-interactive mode: skip category selector.
+    if [[ ! -t 0 && -z "$CATEGORIES_FILTER" ]]; then
+        SELECT_MODE=false
+    fi
+
+    # Dry-run and external volume modes skip category selector.
+    if [[ "$DRY_RUN" == "true" || -n "$EXTERNAL_VOLUME_TARGET" ]]; then
+        SELECT_MODE=false
+    fi
+
     start_cleanup
+
+    if [[ "$SELECT_MODE" == "true" && ${#SELECTED_SECTION_LIST[@]} -eq 0 ]]; then
+        scan_cleanup
+        show_category_selector || exit 0
+
+        # Reset counters for actual cleanup pass.
+        total_items=0
+        files_cleaned=0
+        total_size_cleaned=0
+        DRY_RUN_SEEN_IDENTITIES=()
+    fi
+
     hide_cursor
     perform_cleanup
     show_cursor

@@ -1,0 +1,562 @@
+{
+  "builtTestProducts" : [
+
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.MoleApp-arm64-apple-macosx26.0-debug.module" : {
+      "executable" : "/Library/Developer/CommandLineTools/usr/bin/swiftc",
+      "fileList" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/sources",
+      "importPath" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Models.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/MoleApp.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Services/LicenseManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Services/MenuBarMonitor.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Services/MoleService.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Services/UpdateManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/AboutView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/AnalyzeView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/AnimationModifiers.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/BrandingView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/CleanView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/MenuBarView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/OptimizeView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/PaywallView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/SidebarView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/StatusView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/Theme.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/UninstallView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/sources"
+        }
+      ],
+      "isLibrary" : false,
+      "moduleName" : "MoleApp",
+      "moduleOutputPath" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/Modules/MoleApp.swiftmodule",
+      "objects" : [
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/Models.swift.o",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/MoleApp.swift.o",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/LicenseManager.swift.o",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/MenuBarMonitor.swift.o",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/MoleService.swift.o",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/UpdateManager.swift.o",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/AboutView.swift.o",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/AnalyzeView.swift.o",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/AnimationModifiers.swift.o",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/BrandingView.swift.o",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/CleanView.swift.o",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/MenuBarView.swift.o",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/OptimizeView.swift.o",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/PaywallView.swift.o",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/SidebarView.swift.o",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/StatusView.swift.o",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/Theme.swift.o",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/UninstallView.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j8",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-Xfrontend",
+        "-entry-point-function-name",
+        "-Xfrontend",
+        "MoleApp_main",
+        "-swift-version",
+        "5",
+        "-I",
+        "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+        "-L",
+        "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+        "-plugin-path",
+        "/Library/Developer/CommandLineTools/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "moleapp"
+      ],
+      "outputFileMapPath" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/Models.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/MoleApp.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/LicenseManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/MenuBarMonitor.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/MoleService.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/UpdateManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/AboutView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/AnalyzeView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/AnimationModifiers.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/BrandingView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/CleanView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/MenuBarView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/OptimizeView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/PaywallView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/SidebarView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/StatusView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/Theme.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/UninstallView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/Modules/MoleApp.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Models.swift",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/MoleApp.swift",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Services/LicenseManager.swift",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Services/MenuBarMonitor.swift",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Services/MoleService.swift",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Services/UpdateManager.swift",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/AboutView.swift",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/AnalyzeView.swift",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/AnimationModifiers.swift",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/BrandingView.swift",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/CleanView.swift",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/MenuBarView.swift",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/OptimizeView.swift",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/PaywallView.swift",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/SidebarView.swift",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/StatusView.swift",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/Theme.swift",
+        "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/UninstallView.swift"
+      ],
+      "tempsPath" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "MoleApp" : [
+      "/Library/Developer/CommandLineTools/usr/bin/swiftc",
+      "-module-name",
+      "MoleApp",
+      "-package-name",
+      "moleapp",
+      "-c",
+      "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Models.swift",
+      "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/MoleApp.swift",
+      "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Services/LicenseManager.swift",
+      "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Services/MenuBarMonitor.swift",
+      "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Services/MoleService.swift",
+      "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Services/UpdateManager.swift",
+      "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/AboutView.swift",
+      "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/AnalyzeView.swift",
+      "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/AnimationModifiers.swift",
+      "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/BrandingView.swift",
+      "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/CleanView.swift",
+      "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/MenuBarView.swift",
+      "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/OptimizeView.swift",
+      "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/PaywallView.swift",
+      "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/SidebarView.swift",
+      "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/StatusView.swift",
+      "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/Theme.swift",
+      "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/UninstallView.swift",
+      "-I",
+      "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j8",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-Xfrontend",
+      "-entry-point-function-name",
+      "-Xfrontend",
+      "MoleApp_main",
+      "-swift-version",
+      "5",
+      "-I",
+      "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+      "-L",
+      "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+      "-plugin-path",
+      "/Library/Developer/CommandLineTools/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "moleapp",
+      "-driver-use-frontend-path",
+      "/Library/Developer/CommandLineTools/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "MoleApp" : [
+
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+
+  },
+  "traitConfiguration" : {
+    "default" : {
+
+    }
+  },
+  "writeCommands" : {
+    "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp-entitlement.plist" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<entitlement-plist>"
+        },
+        {
+          "kind" : "virtual",
+          "name" : "<com.apple.security.get-task-allow>"
+        }
+      ],
+      "outputFilePath" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp-entitlement.plist"
+    },
+    "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Models.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/MoleApp.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Services/LicenseManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Services/MenuBarMonitor.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Services/MoleService.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Services/UpdateManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/AboutView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/AnalyzeView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/AnimationModifiers.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/BrandingView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/CleanView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/MenuBarView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/OptimizeView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/PaywallView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/SidebarView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/StatusView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/Theme.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/Sources/MoleApp/Views/UninstallView.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/sources"
+    },
+    "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.product/Objects.LinkFileList" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<link-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/AboutView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/AnalyzeView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/AnimationModifiers.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/BrandingView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/CleanView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/LicenseManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/MenuBarMonitor.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/MenuBarView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/Models.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/MoleApp.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/MoleService.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/OptimizeView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/PaywallView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/SidebarView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/StatusView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/Theme.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/UninstallView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.build/UpdateManager.swift.o"
+        }
+      ],
+      "outputFilePath" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/MoleApp.product/Objects.LinkFileList"
+    },
+    "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Library/Developer/CommandLineTools/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/Users/sagar/Desktop/projects/my/Mole/MoleApp/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt"
+    }
+  }
+}
