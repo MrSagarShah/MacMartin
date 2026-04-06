@@ -312,7 +312,7 @@ struct DuplicateFinderView: View {
                     .fontWeight(.semibold)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(MoleColors.danger)
+                .tint(MacMartinColors.danger)
                 .disabled(scanner.totalSelectedCount == 0)
             }
         }
@@ -325,7 +325,7 @@ struct DuplicateFinderView: View {
             HStack(spacing: 10) {
                 HStack(spacing: 8) {
                     Image(systemName: "folder")
-                        .foregroundStyle(MoleColors.accent)
+                        .foregroundStyle(MacMartinColors.accent)
                     TextField("Choose a folder to scan...", text: $directoryPath)
                         .textFieldStyle(.plain)
                         .font(.system(.body, design: .monospaced))
@@ -337,7 +337,7 @@ struct DuplicateFinderView: View {
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .stroke(MoleColors.cardBorder, lineWidth: 0.5)
+                        .stroke(MacMartinColors.cardBorder, lineWidth: 0.5)
                 )
 
                 Button("Browse") {
@@ -352,7 +352,7 @@ struct DuplicateFinderView: View {
                         .fontWeight(.semibold)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(MoleColors.accent)
+                .tint(MacMartinColors.accent)
                 .disabled(directoryPath.isEmpty || isScanning)
             }
             .padding(.horizontal, 20)
@@ -360,7 +360,7 @@ struct DuplicateFinderView: View {
 
             if let error = scanner.error {
                 Text(error)
-                    .foregroundStyle(MoleColors.danger)
+                    .foregroundStyle(MacMartinColors.danger)
                     .font(.caption)
                     .padding(.horizontal, 20)
                     .padding(.bottom, 8)
@@ -384,11 +384,11 @@ struct DuplicateFinderView: View {
             Spacer()
             ZStack {
                 Circle()
-                    .fill(MoleColors.accent.opacity(0.1))
+                    .fill(MacMartinColors.accent.opacity(0.1))
                     .frame(width: 100, height: 100)
                 Image(systemName: "doc.on.doc")
                     .font(.system(size: 40, weight: .light))
-                    .foregroundStyle(MoleColors.accent)
+                    .foregroundStyle(MacMartinColors.accent)
             }
             .pulseEffect()
             Text("Find Duplicate Files")
@@ -409,18 +409,18 @@ struct DuplicateFinderView: View {
             Spacer()
             ZStack {
                 Circle()
-                    .fill(MoleColors.accent.opacity(0.1))
+                    .fill(MacMartinColors.accent.opacity(0.1))
                     .frame(width: 100, height: 100)
                 if indeterminate {
                     ProgressView()
                         .scaleEffect(1.8)
-                        .tint(MoleColors.accent)
+                        .tint(MacMartinColors.accent)
                 } else {
                     RingGauge(
                         value: scanner.progress,
                         size: 80,
                         lineWidth: 6,
-                        color: MoleColors.accent,
+                        color: MacMartinColors.accent,
                         label: "\(Int(scanner.progress * 100))%"
                     )
                 }
@@ -432,7 +432,7 @@ struct DuplicateFinderView: View {
                 .foregroundStyle(.secondary)
             if !indeterminate {
                 ProgressView(value: scanner.progress)
-                    .tint(MoleColors.accent)
+                    .tint(MacMartinColors.accent)
                     .frame(maxWidth: 300)
             }
             Spacer()
@@ -446,11 +446,11 @@ struct DuplicateFinderView: View {
             Spacer()
             ZStack {
                 Circle()
-                    .fill(MoleColors.success.opacity(0.1))
+                    .fill(MacMartinColors.success.opacity(0.1))
                     .frame(width: 100, height: 100)
                 Image(systemName: "checkmark")
                     .font(.system(size: 40, weight: .medium))
-                    .foregroundStyle(MoleColors.success)
+                    .foregroundStyle(MacMartinColors.success)
             }
             Text("No Duplicates Found")
                 .font(.title3.bold())
@@ -471,7 +471,7 @@ struct DuplicateFinderView: View {
                     scanner.autoSelectAll()
                 }
                 .buttonStyle(.plain)
-                .foregroundStyle(MoleColors.accent)
+                .foregroundStyle(MacMartinColors.accent)
                 .font(.subheadline.weight(.medium))
 
                 if scanner.totalSelectedCount > 0 {
@@ -489,14 +489,14 @@ struct DuplicateFinderView: View {
                 HStack(spacing: 6) {
                     Text("\(scanner.groups.count)")
                         .fontWeight(.bold)
-                        .foregroundStyle(MoleColors.accent)
+                        .foregroundStyle(MacMartinColors.accent)
                     Text("groups")
                         .foregroundStyle(.secondary)
                     Text("|")
                         .foregroundStyle(.quaternary)
                     Text("~\(formatBytes(bytes: scanner.totalWastedBytes)) wasted")
                         .fontWeight(.semibold)
-                        .foregroundStyle(MoleColors.warning)
+                        .foregroundStyle(MacMartinColors.warning)
                 }
                 .font(.subheadline)
             }
@@ -540,11 +540,11 @@ struct DuplicateFinderView: View {
             Spacer()
             ZStack {
                 Circle()
-                    .fill(MoleColors.danger.opacity(0.1))
+                    .fill(MacMartinColors.danger.opacity(0.1))
                     .frame(width: 100, height: 100)
                 ProgressView()
                     .scaleEffect(1.8)
-                    .tint(MoleColors.danger)
+                    .tint(MacMartinColors.danger)
             }
             Text("Deleting...")
                 .font(.title3.bold())
@@ -562,11 +562,11 @@ struct DuplicateFinderView: View {
             Spacer()
             ZStack {
                 Circle()
-                    .fill(MoleColors.success.opacity(0.1))
+                    .fill(MacMartinColors.success.opacity(0.1))
                     .frame(width: 100, height: 100)
                 Image(systemName: "checkmark")
                     .font(.system(size: 40, weight: .medium))
-                    .foregroundStyle(MoleColors.success)
+                    .foregroundStyle(MacMartinColors.success)
             }
             Text("Deletion Complete")
                 .font(.title3.bold())
@@ -577,7 +577,7 @@ struct DuplicateFinderView: View {
             if !scanner.groups.isEmpty {
                 Text("\(scanner.groups.count) duplicate groups remaining")
                     .font(.caption)
-                    .foregroundStyle(MoleColors.warning)
+                    .foregroundStyle(MacMartinColors.warning)
 
                 Button {
                     scanner.phase = .done
@@ -593,7 +593,7 @@ struct DuplicateFinderView: View {
                 Label("Scan Again", systemImage: "arrow.clockwise")
             }
             .buttonStyle(.bordered)
-            .tint(MoleColors.accent)
+            .tint(MacMartinColors.accent)
 
             Spacer()
         }
@@ -633,11 +633,11 @@ struct DuplicateGroupCard: View {
                 HStack(spacing: 12) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 8)
-                            .fill(MoleColors.accent.opacity(0.15))
+                            .fill(MacMartinColors.accent.opacity(0.15))
                             .frame(width: 36, height: 36)
                         Image(systemName: "doc.on.doc.fill")
                             .font(.system(size: 16))
-                            .foregroundStyle(MoleColors.accent)
+                            .foregroundStyle(MacMartinColors.accent)
                     }
 
                     VStack(alignment: .leading, spacing: 2) {
@@ -650,7 +650,7 @@ struct DuplicateGroupCard: View {
                                 .foregroundStyle(.secondary)
                             Text("\(group.files.count) copies")
                                 .font(.caption)
-                                .foregroundStyle(MoleColors.warning)
+                                .foregroundStyle(MacMartinColors.warning)
                         }
                     }
 
@@ -659,12 +659,12 @@ struct DuplicateGroupCard: View {
                     if selectedCount > 0 {
                         Text("\(selectedCount) selected")
                             .font(.caption)
-                            .foregroundStyle(MoleColors.danger)
+                            .foregroundStyle(MacMartinColors.danger)
                             .padding(.horizontal, 8)
                             .padding(.vertical, 3)
                             .background(
                                 Capsule()
-                                    .fill(MoleColors.danger.opacity(0.12))
+                                    .fill(MacMartinColors.danger.opacity(0.12))
                             )
                     }
 
@@ -691,7 +691,7 @@ struct DuplicateGroupCard: View {
                             }
                         }
                         .font(.caption.weight(.medium))
-                        .foregroundStyle(MoleColors.accent)
+                        .foregroundStyle(MacMartinColors.accent)
                         .buttonStyle(.plain)
 
                         Spacer()
@@ -732,24 +732,24 @@ struct DuplicateGroupCard: View {
                             if index == 0 && !group.files[index].selected {
                                 Text("KEEP")
                                     .font(.caption2.weight(.bold))
-                                    .foregroundStyle(MoleColors.success)
+                                    .foregroundStyle(MacMartinColors.success)
                                     .padding(.horizontal, 6)
                                     .padding(.vertical, 2)
                                     .background(
                                         Capsule()
-                                            .fill(MoleColors.success.opacity(0.12))
+                                            .fill(MacMartinColors.success.opacity(0.12))
                                     )
                             }
 
                             if group.files[index].selected {
                                 Text("DELETE")
                                     .font(.caption2.weight(.bold))
-                                    .foregroundStyle(MoleColors.danger)
+                                    .foregroundStyle(MacMartinColors.danger)
                                     .padding(.horizontal, 6)
                                     .padding(.vertical, 2)
                                     .background(
                                         Capsule()
-                                            .fill(MoleColors.danger.opacity(0.12))
+                                            .fill(MacMartinColors.danger.opacity(0.12))
                                     )
                             }
                         }
@@ -757,7 +757,7 @@ struct DuplicateGroupCard: View {
                         .padding(.vertical, 6)
                         .background(
                             group.files[index].selected
-                                ? MoleColors.danger.opacity(0.04)
+                                ? MacMartinColors.danger.opacity(0.04)
                                 : Color.clear
                         )
 
@@ -772,12 +772,12 @@ struct DuplicateGroupCard: View {
         }
         .background(
             RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .fill(selectedCount > 0 ? MoleColors.danger.opacity(0.02) : Color.clear)
+                .fill(selectedCount > 0 ? MacMartinColors.danger.opacity(0.02) : Color.clear)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 10, style: .continuous)
                 .stroke(
-                    selectedCount > 0 ? MoleColors.danger.opacity(0.15) : MoleColors.cardBorder,
+                    selectedCount > 0 ? MacMartinColors.danger.opacity(0.15) : MacMartinColors.cardBorder,
                     lineWidth: 1
                 )
         )

@@ -306,7 +306,7 @@ struct AppUpdatesView: View {
                                 .fontWeight(.semibold)
                         }
                         .buttonStyle(.borderedProminent)
-                        .tint(MoleColors.warning)
+                        .tint(MacMartinColors.warning)
                     }
                     Button {
                         checker.checkForUpdates()
@@ -315,7 +315,7 @@ struct AppUpdatesView: View {
                             .fontWeight(.semibold)
                     }
                     .buttonStyle(.borderedProminent)
-                    .tint(MoleColors.accent)
+                    .tint(MacMartinColors.accent)
                     .disabled(checker.scanning)
                 }
             }
@@ -328,10 +328,10 @@ struct AppUpdatesView: View {
                         .textFieldStyle(.plain)
                 }
                 .padding(10)
-                .background(MoleColors.cardBg)
+                .background(MacMartinColors.cardBg)
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
-                        .stroke(MoleColors.cardBorder, lineWidth: 1)
+                        .stroke(MacMartinColors.cardBorder, lineWidth: 1)
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .padding(.horizontal, 20)
@@ -346,7 +346,7 @@ struct AppUpdatesView: View {
                     ProgressView(value: Double(checker.scanProgress), total: max(Double(checker.scanTotal), 1))
                         .progressViewStyle(.linear)
                         .frame(maxWidth: 280)
-                        .tint(MoleColors.accent)
+                        .tint(MacMartinColors.accent)
                     Text("Scanning \(checker.scanProgress) of \(checker.scanTotal) apps...")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
@@ -359,11 +359,11 @@ struct AppUpdatesView: View {
                     Spacer()
                     ZStack {
                         Circle()
-                            .fill(MoleColors.accent.opacity(0.1))
+                            .fill(MacMartinColors.accent.opacity(0.1))
                             .frame(width: 80, height: 80)
                         Image(systemName: "arrow.triangle.2.circlepath.circle")
                             .font(.system(size: 32, weight: .light))
-                            .foregroundStyle(MoleColors.accent)
+                            .foregroundStyle(MacMartinColors.accent)
                     }
                     Text("Click \"Check for Updates\" to scan your apps")
                         .foregroundStyle(.secondary)
@@ -374,7 +374,7 @@ struct AppUpdatesView: View {
                     Spacer()
                     Image(systemName: "exclamationmark.triangle")
                         .font(.system(size: 32))
-                        .foregroundStyle(MoleColors.warning)
+                        .foregroundStyle(MacMartinColors.warning)
                     Text(error).foregroundStyle(.secondary).font(.caption)
                     Spacer()
                 }
@@ -385,7 +385,7 @@ struct AppUpdatesView: View {
                             sectionHeader(
                                 title: "Updates Available",
                                 count: updatesAvailable.count,
-                                color: MoleColors.warning
+                                color: MacMartinColors.warning
                             )
 
                             ForEach(Array(updatesAvailable.enumerated()), id: \.element.id) { i, app in
@@ -398,7 +398,7 @@ struct AppUpdatesView: View {
                             sectionHeader(
                                 title: "Up to Date",
                                 count: upToDate.count,
-                                color: MoleColors.success
+                                color: MacMartinColors.success
                             )
 
                             ForEach(Array(upToDate.enumerated()), id: \.element.id) { i, app in
@@ -411,7 +411,7 @@ struct AppUpdatesView: View {
                             sectionHeader(
                                 title: "Unknown",
                                 count: unknown.count,
-                                color: MoleColors.subtleText
+                                color: MacMartinColors.subtleText
                             )
 
                             ForEach(Array(unknown.enumerated()), id: \.element.id) { i, app in
@@ -488,7 +488,7 @@ struct AppUpdateRow: View {
                 if let latest = app.latestVersion {
                     Text(latest)
                         .font(.system(.caption, design: .monospaced))
-                        .foregroundStyle(app.updateAvailable ? MoleColors.warning : MoleColors.success)
+                        .foregroundStyle(app.updateAvailable ? MacMartinColors.warning : MacMartinColors.success)
                 }
             }
             .frame(minWidth: 70, alignment: .trailing)
@@ -496,21 +496,21 @@ struct AppUpdateRow: View {
             // Status icon
             if app.updateAvailable {
                 Image(systemName: "arrow.up.circle.fill")
-                    .foregroundStyle(MoleColors.warning)
+                    .foregroundStyle(MacMartinColors.warning)
                     .font(.body)
             } else if app.latestVersion != nil {
                 Image(systemName: "checkmark.circle.fill")
-                    .foregroundStyle(MoleColors.success)
+                    .foregroundStyle(MacMartinColors.success)
                     .font(.body)
             } else {
                 Image(systemName: "minus.circle")
-                    .foregroundStyle(MoleColors.subtleText)
+                    .foregroundStyle(MacMartinColors.subtleText)
                     .font(.body)
             }
         }
         .padding(.vertical, 6)
         .padding(.horizontal, 10)
-        .background(highlighted ? MoleColors.warning.opacity(0.04) : Color.clear)
+        .background(highlighted ? MacMartinColors.warning.opacity(0.04) : Color.clear)
         .contentShape(Rectangle())
         .cornerRadius(8)
         .hoverEffect()
@@ -532,9 +532,9 @@ struct AppUpdateRow: View {
 
     private var sourceBadgeColor: Color {
         switch app.source {
-        case .appStore: return MoleColors.accent
-        case .homebrew: return MoleColors.success
-        case .unknown: return MoleColors.subtleText
+        case .appStore: return MacMartinColors.accent
+        case .homebrew: return MacMartinColors.success
+        case .unknown: return MacMartinColors.subtleText
         }
     }
 }

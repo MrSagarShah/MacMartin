@@ -68,9 +68,9 @@ struct LargeFileFinderView: View {
                     .controlSize(.small)
                 }
                 .padding(8)
-                .background(MoleColors.cardBg)
+                .background(MacMartinColors.cardBg)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                .overlay(RoundedRectangle(cornerRadius: 8).stroke(MoleColors.cardBorder, lineWidth: 0.5))
+                .overlay(RoundedRectangle(cornerRadius: 8).stroke(MacMartinColors.cardBorder, lineWidth: 0.5))
 
                 // Min size
                 HStack(spacing: 4) {
@@ -111,7 +111,7 @@ struct LargeFileFinderView: View {
                             .font(.caption.weight(.semibold))
                     }
                     .buttonStyle(.borderedProminent)
-                    .tint(MoleColors.danger)
+                    .tint(MacMartinColors.danger)
                     .controlSize(.small)
                 }
             }
@@ -217,7 +217,7 @@ struct LargeFileFinderView: View {
                 .foregroundStyle(.secondary)
                 .padding(.horizontal, 6)
                 .padding(.vertical, 2)
-                .background(MoleColors.cardBg)
+                .background(MacMartinColors.cardBg)
                 .clipShape(RoundedRectangle(cornerRadius: 3))
                 .frame(width: 60, alignment: .center)
 
@@ -231,7 +231,7 @@ struct LargeFileFinderView: View {
             } label: {
                 Image(systemName: "arrow.right.circle")
                     .font(.system(size: 12))
-                    .foregroundStyle(MoleColors.accent)
+                    .foregroundStyle(MacMartinColors.accent)
             }
             .buttonStyle(.plain)
             .frame(width: 40)

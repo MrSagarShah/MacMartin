@@ -6,7 +6,7 @@ struct MaintenanceView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            ViewHeader(icon: "wrench.and.screwdriver", title: "Maintenance", iconColor: MoleColors.success) {
+            ViewHeader(icon: "wrench.and.screwdriver", title: "Maintenance", iconColor: MacMartinColors.success) {
                 Button {
                     runAll()
                 } label: {
@@ -14,7 +14,7 @@ struct MaintenanceView: View {
                         .fontWeight(.semibold)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(MoleColors.success)
+                .tint(MacMartinColors.success)
                 .disabled(runningAll)
             }
 
@@ -58,7 +58,7 @@ struct MaintenanceView: View {
                 if let result = task.result {
                     Text(result)
                         .font(.system(.caption, design: .monospaced))
-                        .foregroundStyle(task.status == .done ? MoleColors.success : MoleColors.danger)
+                        .foregroundStyle(task.status == .done ? MacMartinColors.success : MacMartinColors.danger)
                         .padding(.top, 2)
                 }
             }
@@ -82,11 +82,11 @@ struct MaintenanceView: View {
             case .done:
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 20))
-                    .foregroundStyle(MoleColors.success)
+                    .foregroundStyle(MacMartinColors.success)
             case .failed:
                 Image(systemName: "xmark.circle.fill")
                     .font(.system(size: 20))
-                    .foregroundStyle(MoleColors.danger)
+                    .foregroundStyle(MacMartinColors.danger)
             }
         }
         .padding(14)
@@ -294,7 +294,7 @@ struct MaintenanceView: View {
                 name: "Repair Disk Permissions",
                 description: "Reset home folder permissions to default. Fixes file access issues and app permission errors.",
                 icon: "lock.shield",
-                color: MoleColors.success
+                color: MacMartinColors.success
             ),
             MaintenanceTask(
                 id: "clear_system_logs",

@@ -22,7 +22,7 @@ struct OnboardingView: View {
 
             // Subtle accent orb behind content
             Circle()
-                .fill(MoleColors.accent.opacity(0.06))
+                .fill(MacMartinColors.accent.opacity(0.06))
                 .frame(width: 400, height: 400)
                 .blur(radius: 80)
                 .offset(y: -40)
@@ -59,7 +59,7 @@ struct OnboardingView: View {
             HStack(spacing: 8) {
                 ForEach(0..<totalPages, id: \.self) { i in
                     Capsule()
-                        .fill(i == currentPage ? MoleColors.accent : Color.white.opacity(0.15))
+                        .fill(i == currentPage ? MacMartinColors.accent : Color.white.opacity(0.15))
                         .frame(width: i == currentPage ? 24 : 8, height: 8)
                         .animation(.spring(response: 0.35), value: currentPage)
                 }
@@ -88,7 +88,7 @@ struct OnboardingView: View {
                         .foregroundStyle(.white)
                         .padding(.horizontal, 22)
                         .padding(.vertical, 9)
-                        .background(MoleColors.accent)
+                        .background(MacMartinColors.accent)
                         .clipShape(Capsule())
                     }
                     .buttonStyle(.plain)
@@ -105,7 +105,7 @@ struct OnboardingView: View {
                     .foregroundStyle(.white)
                     .padding(.horizontal, 28)
                     .padding(.vertical, 10)
-                    .background(MoleColors.success)
+                    .background(MacMartinColors.success)
                     .clipShape(Capsule())
                 }
                 .buttonStyle(.plain)
@@ -121,8 +121,8 @@ struct OnboardingView: View {
         VStack(spacing: 28) {
             Spacer()
 
-            MoleLogo(size: 88)
-                .shadow(color: MoleColors.accent.opacity(0.5), radius: 30, y: 10)
+            MacMartinLogo(size: 88)
+                .shadow(color: MacMartinColors.accent.opacity(0.5), radius: 30, y: 10)
 
             VStack(spacing: 10) {
                 Text("Welcome to")
@@ -163,7 +163,7 @@ struct OnboardingView: View {
                     .frame(width: 60, height: 60)
                 Image(systemName: icon)
                     .font(.system(size: 20))
-                    .foregroundStyle(MoleColors.accent)
+                    .foregroundStyle(MacMartinColors.accent)
             }
             Text(value)
                 .font(.system(size: 15, weight: .bold, design: .rounded))
@@ -338,14 +338,14 @@ struct OnboardingView: View {
                 Circle()
                     .fill(
                         RadialGradient(
-                            colors: [MoleColors.success.opacity(0.15), Color.clear],
+                            colors: [MacMartinColors.success.opacity(0.15), Color.clear],
                             center: .center, startRadius: 0, endRadius: 60
                         )
                     )
                     .frame(width: 120, height: 120)
                 Image(systemName: "checkmark")
                     .font(.system(size: 44, weight: .medium))
-                    .foregroundStyle(MoleColors.success)
+                    .foregroundStyle(MacMartinColors.success)
             }
 
             VStack(spacing: 8) {
@@ -372,7 +372,7 @@ struct OnboardingView: View {
         HStack(spacing: 6) {
             Image(systemName: icon)
                 .font(.caption)
-                .foregroundStyle(MoleColors.accent)
+                .foregroundStyle(MacMartinColors.accent)
             Text(text)
                 .font(.caption)
                 .foregroundStyle(.white.opacity(0.4))

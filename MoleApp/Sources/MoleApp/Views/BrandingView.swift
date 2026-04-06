@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct MoleLogo: View {
+struct MacMartinLogo: View {
     var size: CGFloat = 48
 
     var body: some View {
@@ -8,7 +8,7 @@ struct MoleLogo: View {
             RoundedRectangle(cornerRadius: size * 0.22, style: .continuous)
                 .fill(
                     LinearGradient(
-                        colors: [MoleColors.accent, Color(red: 0.2, green: 0.35, blue: 0.9)],
+                        colors: [MacMartinColors.accent, Color(red: 0.2, green: 0.35, blue: 0.9)],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )
@@ -28,7 +28,7 @@ struct SidebarHeader: View {
     var body: some View {
         VStack(spacing: 8) {
             HStack(spacing: 10) {
-                MoleLogo(size: 34)
+                MacMartinLogo(size: 34)
 
                 VStack(alignment: .leading, spacing: 1) {
                     HStack(spacing: 5) {

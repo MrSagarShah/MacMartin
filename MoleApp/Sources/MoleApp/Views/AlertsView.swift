@@ -13,7 +13,7 @@ struct AlertsView: View {
                     } label: {
                         Text("Clear All")
                             .font(.caption)
-                            .foregroundStyle(MoleColors.subtleText)
+                            .foregroundStyle(MacMartinColors.subtleText)
                     }
                     .buttonStyle(.plain)
                 }
@@ -46,14 +46,14 @@ struct AlertsView: View {
             Toggle(isOn: $alertManager.settings.alertsEnabled) {
                 HStack(spacing: 8) {
                     Image(systemName: "bell.fill")
-                        .foregroundStyle(alertManager.settings.alertsEnabled ? MoleColors.accent : .secondary)
+                        .foregroundStyle(alertManager.settings.alertsEnabled ? MacMartinColors.accent : .secondary)
                         .font(.system(size: 13))
                     Text("Enable Smart Alerts")
                         .font(.subheadline)
                 }
             }
             .toggleStyle(.switch)
-            .tint(MoleColors.accent)
+            .tint(MacMartinColors.accent)
 
             if alertManager.settings.alertsEnabled {
                 VStack(spacing: 12) {
@@ -61,13 +61,13 @@ struct AlertsView: View {
                         label: "Disk",
                         icon: "internaldrive.fill",
                         value: $alertManager.settings.diskThreshold,
-                        color: MoleColors.danger
+                        color: MacMartinColors.danger
                     )
                     thresholdSlider(
                         label: "Memory",
                         icon: "memorychip.fill",
                         value: $alertManager.settings.memoryThreshold,
-                        color: MoleColors.warning
+                        color: MacMartinColors.warning
                     )
                     thresholdSlider(
                         label: "CPU",

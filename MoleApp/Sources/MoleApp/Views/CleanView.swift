@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct CleanView: View {
-    @EnvironmentObject private var mole: MoleService
+    @EnvironmentObject private var mole: MacMartinService
     @State private var categories: [CleanCategory] = []
     @State private var scanResult: CleanScanResult?
     @State private var phase: Phase = .idle
@@ -63,7 +63,7 @@ struct CleanView: View {
                         .fontWeight(.semibold)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(MoleColors.danger)
+                .tint(MacMartinColors.danger)
                 .disabled(selectedCategories.isEmpty)
             }
             if phase == .idle || phase == .done {
@@ -74,7 +74,7 @@ struct CleanView: View {
                         .fontWeight(.semibold)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(MoleColors.accent)
+                .tint(MacMartinColors.accent)
             }
         }
     }
@@ -86,11 +86,11 @@ struct CleanView: View {
             Spacer()
             ZStack {
                 Circle()
-                    .fill(MoleColors.accent.opacity(0.1))
+                    .fill(MacMartinColors.accent.opacity(0.1))
                     .frame(width: 100, height: 100)
                 Image(systemName: "magnifyingglass")
                     .font(.system(size: 40, weight: .light))
-                    .foregroundStyle(MoleColors.accent)
+                    .foregroundStyle(MacMartinColors.accent)
             }
             .pulseEffect()
             Text("Scan your Mac")
@@ -102,7 +102,7 @@ struct CleanView: View {
                 .frame(maxWidth: 350)
             if let error {
                 Text(error)
-                    .foregroundStyle(MoleColors.danger)
+                    .foregroundStyle(MacMartinColors.danger)
                     .font(.caption)
                     .padding(8)
                     .cardStyle(padding: 8)
@@ -118,11 +118,11 @@ struct CleanView: View {
             Spacer()
             ZStack {
                 Circle()
-                    .fill(MoleColors.accent.opacity(0.1))
+                    .fill(MacMartinColors.accent.opacity(0.1))
                     .frame(width: 100, height: 100)
                 ProgressView()
                     .scaleEffect(1.8)
-                    .tint(MoleColors.accent)
+                    .tint(MacMartinColors.accent)
             }
             Text("Scanning...")
                 .font(.title3.bold())
@@ -148,7 +148,7 @@ struct CleanView: View {
                     }
                 }
                 .buttonStyle(.plain)
-                .foregroundStyle(MoleColors.accent)
+                .foregroundStyle(MacMartinColors.accent)
                 .font(.subheadline.weight(.medium))
 
                 Spacer()
@@ -156,15 +156,15 @@ struct CleanView: View {
                 HStack(spacing: 6) {
                     Text("\(selectedCategories.count)")
                         .fontWeight(.bold)
-                        .foregroundStyle(MoleColors.accent)
+                        .foregroundStyle(MacMartinColors.accent)
                     Text("selected")
                         .foregroundStyle(.secondary)
                     Text("|")
                         .foregroundStyle(.quaternary)
                     Text(formatBytes(kb: selectedSize))
                         .fontWeight(.semibold)
-                        .foregroundStyle(selectedSize > 1_048_576 ? MoleColors.danger :
-                            selectedSize > 102_400 ? MoleColors.warning : .primary)
+                        .foregroundStyle(selectedSize > 1_048_576 ? MacMartinColors.danger :
+                            selectedSize > 102_400 ? MacMartinColors.warning : .primary)
                 }
                 .font(.subheadline)
             }
@@ -200,11 +200,11 @@ struct CleanView: View {
             Spacer()
             ZStack {
                 Circle()
-                    .fill(MoleColors.danger.opacity(0.1))
+                    .fill(MacMartinColors.danger.opacity(0.1))
                     .frame(width: 100, height: 100)
                 ProgressView()
                     .scaleEffect(1.8)
-                    .tint(MoleColors.danger)
+                    .tint(MacMartinColors.danger)
             }
             Text("Cleaning...")
                 .font(.title3.bold())
@@ -222,11 +222,11 @@ struct CleanView: View {
             Spacer()
             ZStack {
                 Circle()
-                    .fill(MoleColors.success.opacity(0.1))
+                    .fill(MacMartinColors.success.opacity(0.1))
                     .frame(width: 100, height: 100)
                 Image(systemName: "checkmark")
                     .font(.system(size: 40, weight: .medium))
-                    .foregroundStyle(MoleColors.success)
+                    .foregroundStyle(MacMartinColors.success)
             }
             Text("Cleanup Complete")
                 .font(.title3.bold())
@@ -322,8 +322,8 @@ struct CategoryCard: View {
                     Spacer()
                     Text(category.sizeFormatted)
                         .font(.system(.subheadline, design: .monospaced, weight: .semibold))
-                        .foregroundStyle(category.sizeKb > 1_048_576 ? MoleColors.danger :
-                            category.sizeKb > 102_400 ? MoleColors.warning : .primary)
+                        .foregroundStyle(category.sizeKb > 1_048_576 ? MacMartinColors.danger :
+                            category.sizeKb > 102_400 ? MacMartinColors.warning : .primary)
                 }
 
                 HStack(spacing: 8) {
@@ -349,7 +349,7 @@ struct CategoryCard: View {
         .background(category.selected && category.sizeKb > 0 ? color.opacity(0.04) : Color.clear)
         .overlay(
             RoundedRectangle(cornerRadius: 10)
-                .stroke(category.selected && category.sizeKb > 0 ? color.opacity(0.2) : MoleColors.cardBorder, lineWidth: 1)
+                .stroke(category.selected && category.sizeKb > 0 ? color.opacity(0.2) : MacMartinColors.cardBorder, lineWidth: 1)
         )
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .opacity(category.sizeKb == 0 ? 0.4 : 1.0)

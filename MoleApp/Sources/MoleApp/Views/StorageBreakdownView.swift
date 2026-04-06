@@ -327,7 +327,7 @@ private struct ScanningView: View {
                     .trim(from: 0, to: 0.3)
                     .stroke(
                         AngularGradient(
-                            colors: [MoleColors.accent.opacity(0.1), MoleColors.accent],
+                            colors: [MacMartinColors.accent.opacity(0.1), MacMartinColors.accent],
                             center: .center
                         ),
                         style: StrokeStyle(lineWidth: 28, lineCap: .round)
@@ -343,7 +343,7 @@ private struct ScanningView: View {
                 VStack(spacing: 4) {
                     Image(systemName: "internaldrive")
                         .font(.system(size: 24, weight: .light))
-                        .foregroundStyle(MoleColors.accent)
+                        .foregroundStyle(MacMartinColors.accent)
                     Text("Scanning")
                         .font(.system(size: 14, weight: .semibold, design: .rounded))
                 }
@@ -400,7 +400,7 @@ struct StorageBreakdownView: View {
             Spacer()
             Image(systemName: "chart.pie")
                 .font(.system(size: 40, weight: .thin))
-                .foregroundStyle(MoleColors.subtleText)
+                .foregroundStyle(MacMartinColors.subtleText)
             Text("Scan your disk to see the storage breakdown")
                 .font(.system(size: 13))
                 .foregroundStyle(.secondary)
@@ -408,7 +408,7 @@ struct StorageBreakdownView: View {
                 scanner.scan()
             }
             .buttonStyle(.borderedProminent)
-            .tint(MoleColors.accent)
+            .tint(MacMartinColors.accent)
             Spacer()
         }
     }
@@ -441,7 +441,7 @@ struct StorageBreakdownView: View {
                     HStack(spacing: 24) {
                         HStack(spacing: 6) {
                             Circle()
-                                .fill(MoleColors.accent)
+                                .fill(MacMartinColors.accent)
                                 .frame(width: 7, height: 7)
                             Text("Used: \(formatBytes(bytes: scanner.totalBytes - scanner.freeBytes))")
                                 .font(.system(size: 11, weight: .medium))

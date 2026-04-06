@@ -165,7 +165,7 @@ struct StatusMetrics: Codable {
     let disks: [DiskStatus]?
     let batteries: [BatteryStatus]?
     let thermal: ThermalStatus?
-    let topProcesses: [MoleProcessInfo]?
+    let topProcesses: [MacMartinProcessInfo]?
 
     enum CodingKeys: String, CodingKey {
         case collectedAt = "collected_at"
@@ -288,7 +288,7 @@ enum ThermalFanSpeed: Codable {
     }
 }
 
-struct MoleProcessInfo: Codable, Identifiable {
+struct MacMartinProcessInfo: Codable, Identifiable {
     let pid: Int
     let name: String
     let cpu: Double

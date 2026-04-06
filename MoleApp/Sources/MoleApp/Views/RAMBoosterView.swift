@@ -77,9 +77,9 @@ struct RAMBoosterView: View {
                                 .font(.subheadline)
                         }
                         .padding(8)
-                        .background(MoleColors.cardBg)
+                        .background(MacMartinColors.cardBg)
                         .clipShape(RoundedRectangle(cornerRadius: 8))
-                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(MoleColors.cardBorder, lineWidth: 0.5))
+                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(MacMartinColors.cardBorder, lineWidth: 0.5))
 
                         Picker("Sort", selection: $sortBy) {
                             Text("Memory").tag(SortField.memory)
@@ -136,8 +136,8 @@ struct RAMBoosterView: View {
         HStack(spacing: 16) {
             memChip(label: "Used", value: String(format: "%.1f GB", mem.usedGB), color: .red, fraction: mem.usedGB / mem.totalGB)
             memChip(label: "Cached", value: String(format: "%.1f GB", mem.cachedGB), color: .orange, fraction: mem.cachedGB / mem.totalGB)
-            memChip(label: "Free", value: String(format: "%.1f GB", mem.freeGB), color: MoleColors.success, fraction: mem.freeGB / mem.totalGB)
-            memChip(label: "Total", value: String(format: "%.0f GB", mem.totalGB), color: MoleColors.accent, fraction: 1.0)
+            memChip(label: "Free", value: String(format: "%.1f GB", mem.freeGB), color: MacMartinColors.success, fraction: mem.freeGB / mem.totalGB)
+            memChip(label: "Total", value: String(format: "%.0f GB", mem.totalGB), color: MacMartinColors.accent, fraction: 1.0)
 
             Spacer()
 
@@ -154,7 +154,7 @@ struct RAMBoosterView: View {
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 12)
-        .background(MoleColors.headerGradient)
+        .background(MacMartinColors.headerGradient)
     }
 
     private func memChip(label: String, value: String, color: Color, fraction: Double) -> some View {
@@ -184,7 +184,7 @@ struct RAMBoosterView: View {
             HStack(spacing: 8) {
                 Image(systemName: proc.isSystem ? "gearshape" : "app")
                     .font(.system(size: 10))
-                    .foregroundStyle(proc.isSystem ? .secondary : MoleColors.accent)
+                    .foregroundStyle(proc.isSystem ? .secondary : MacMartinColors.accent)
                     .frame(width: 16)
                 Text(proc.name)
                     .font(.subheadline)
@@ -212,7 +212,7 @@ struct RAMBoosterView: View {
             } label: {
                 Image(systemName: "xmark.circle")
                     .font(.system(size: 12))
-                    .foregroundStyle(MoleColors.danger.opacity(0.7))
+                    .foregroundStyle(MacMartinColors.danger.opacity(0.7))
             }
             .buttonStyle(.plain)
             .frame(width: 60)
@@ -286,7 +286,7 @@ struct RAMBoosterView: View {
 
     private func pressureColor(_ pressure: String) -> Color {
         switch pressure {
-        case "Normal": return MoleColors.success
+        case "Normal": return MacMartinColors.success
         case "Warning": return .orange
         case "Critical": return .red
         default: return .secondary

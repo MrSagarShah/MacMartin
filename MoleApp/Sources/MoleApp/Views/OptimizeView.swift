@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct OptimizeView: View {
-    @EnvironmentObject private var mole: MoleService
+    @EnvironmentObject private var mole: MacMartinService
     @State private var running = false
     @State private var output: String = ""
     @State private var error: String?
@@ -34,7 +34,7 @@ struct OptimizeView: View {
                         .fontWeight(.semibold)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(MoleColors.accent)
+                .tint(MacMartinColors.accent)
                 .disabled(running)
             }
 
@@ -61,10 +61,10 @@ struct OptimizeView: View {
                             Spacer()
                         }
                         .padding(10)
-                        .background(MoleColors.cardBg)
+                        .background(MacMartinColors.cardBg)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
-                                .stroke(MoleColors.cardBorder, lineWidth: 1)
+                                .stroke(MacMartinColors.cardBorder, lineWidth: 1)
                         )
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .hoverEffect()
@@ -84,12 +84,12 @@ struct OptimizeView: View {
                         .padding(12)
                 }
                 .frame(maxHeight: 160)
-                .background(MoleColors.cardBg)
+                .background(MacMartinColors.cardBg)
             }
 
             if let error {
                 HStack {
-                    Text(error).foregroundStyle(MoleColors.danger).font(.caption)
+                    Text(error).foregroundStyle(MacMartinColors.danger).font(.caption)
                     Spacer()
                 }
                 .padding(.horizontal, 20)

@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - Premium Color Palette
 
-enum MoleColors {
+enum MacMartinColors {
     // Primary brand
     static let accent = Color(red: 0.40, green: 0.52, blue: 1.0)
     static let accentLight = Color(red: 0.55, green: 0.65, blue: 1.0)
@@ -46,12 +46,12 @@ struct CardStyle: ViewModifier {
                     .fill(.ultraThinMaterial.opacity(0.5))
                     .overlay(
                         RoundedRectangle(cornerRadius: 14, style: .continuous)
-                            .fill(MoleColors.cardBg)
+                            .fill(MacMartinColors.cardBg)
                     )
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .stroke(MoleColors.cardBorder, lineWidth: 0.5)
+                    .stroke(MacMartinColors.cardBorder, lineWidth: 0.5)
             )
             .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
     }
@@ -176,7 +176,7 @@ struct ViewHeader<Trailing: View>: View {
     let iconColor: Color
     @ViewBuilder let trailing: () -> Trailing
 
-    init(icon: String, title: String, iconColor: Color = MoleColors.accent, @ViewBuilder trailing: @escaping () -> Trailing) {
+    init(icon: String, title: String, iconColor: Color = MacMartinColors.accent, @ViewBuilder trailing: @escaping () -> Trailing) {
         self.icon = icon
         self.title = title
         self.iconColor = iconColor
@@ -201,7 +201,7 @@ struct ViewHeader<Trailing: View>: View {
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 14)
-            .background(MoleColors.headerGradient)
+            .background(MacMartinColors.headerGradient)
             Divider()
         }
     }

@@ -4,7 +4,7 @@ import ServiceManagement
 
 struct MenuBarView: View {
     @EnvironmentObject private var monitor: MenuBarMonitor
-    @EnvironmentObject private var mole: MoleService
+    @EnvironmentObject private var mole: MacMartinService
     @State private var isCleaningQuick = false
     @State private var isPurgingRAM = false
     @State private var lastCleaned: String = UserDefaults.standard.string(forKey: "macmartin_last_cleaned") ?? "Never"
@@ -14,7 +14,7 @@ struct MenuBarView: View {
         VStack(spacing: 0) {
             // Header
             HStack(spacing: 8) {
-                MoleLogo(size: 22)
+                MacMartinLogo(size: 22)
                 Text("MacMartin")
                     .font(.subheadline.bold())
                 Spacer()
@@ -114,7 +114,7 @@ struct MenuBarView: View {
                 .padding(.vertical, 4)
                 .padding(.horizontal, 8)
 
-                quickAction(icon: "macwindow", label: "Open MacMartin", color: MoleColors.accent) {
+                quickAction(icon: "macwindow", label: "Open MacMartin", color: MacMartinColors.accent) {
                     // Open or create the main window
                     if let window = NSApp.windows.first(where: { $0.canBecomeMain }) {
                         window.makeKeyAndOrderFront(nil)

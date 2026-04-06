@@ -4,16 +4,16 @@ import ServiceManagement
 
 // MARK: - App Delegate (keep alive when window closes)
 
-class MoleAppDelegate: NSObject, NSApplicationDelegate {
+class MacMartinAppDelegate: NSObject, NSApplicationDelegate {
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return false  // Stay alive in menu bar
     }
 }
 
 @main
-struct MoleApp: App {
-    @NSApplicationDelegateAdaptor(MoleAppDelegate.self) var appDelegate
-    @StateObject private var moleService = MoleService()
+struct MacMartinApp: App {
+    @NSApplicationDelegateAdaptor(MacMartinAppDelegate.self) var appDelegate
+    @StateObject private var moleService = MacMartinService()
     @StateObject private var licenseManager = LicenseManager()
     @StateObject private var updateManager = UpdateManager()
     @StateObject private var menuBarMonitor = MenuBarMonitor()
@@ -137,7 +137,7 @@ struct ForceUpdateView: View {
                 .ignoresSafeArea()
 
             VStack(spacing: 24) {
-                MoleLogo(size: 64)
+                MacMartinLogo(size: 64)
 
                 Text("Update Required")
                     .font(.title.bold())
@@ -154,7 +154,7 @@ struct ForceUpdateView: View {
                         .foregroundStyle(.white.opacity(0.4))
                     if !updater.latestVersion.isEmpty {
                         Text("Latest: v\(updater.latestVersion)")
-                            .foregroundStyle(MoleColors.success)
+                            .foregroundStyle(MacMartinColors.success)
                     }
                 }
                 .font(.caption)
@@ -171,7 +171,7 @@ struct ForceUpdateView: View {
                     .padding(.vertical, 12)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(MoleColors.accent)
+                .tint(MacMartinColors.accent)
             }
             .padding(40)
         }

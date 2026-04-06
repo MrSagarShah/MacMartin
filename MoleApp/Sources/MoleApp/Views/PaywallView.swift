@@ -113,14 +113,14 @@ struct PaywallView: View {
             // Branded header
             ZStack {
                 LinearGradient(
-                    colors: [MoleColors.accent.opacity(0.12), Color.clear],
+                    colors: [MacMartinColors.accent.opacity(0.12), Color.clear],
                     startPoint: .top, endPoint: .bottom
                 )
                 .frame(height: 150)
 
                 VStack(spacing: 12) {
-                    MoleLogo(size: 60)
-                        .shadow(color: MoleColors.accent.opacity(0.3), radius: 12, y: 4)
+                    MacMartinLogo(size: 60)
+                        .shadow(color: MacMartinColors.accent.opacity(0.3), radius: 12, y: 4)
                     HStack(spacing: 6) {
                         Text("MacMartin")
                             .font(.title.bold())
@@ -162,11 +162,11 @@ struct PaywallView: View {
                 if license.tier == .pro {
                     HStack(spacing: 4) {
                         Circle()
-                            .fill(MoleColors.success)
+                            .fill(MacMartinColors.success)
                             .frame(width: 6, height: 6)
                         Text("Licensed")
                             .font(.caption)
-                            .foregroundStyle(MoleColors.success)
+                            .foregroundStyle(MacMartinColors.success)
                         if let email = license.licenseEmail {
                             Text("(\(email))")
                                 .font(.caption)
@@ -236,7 +236,7 @@ struct PaywallView: View {
     private func checkIcon(_ enabled: Bool) -> some View {
         Image(systemName: enabled ? "checkmark.circle.fill" : "minus.circle")
             .font(.system(size: 14))
-            .foregroundStyle(enabled ? MoleColors.success : Color.gray.opacity(0.3))
+            .foregroundStyle(enabled ? MacMartinColors.success : Color.gray.opacity(0.3))
     }
 
     // MARK: - Activation
@@ -271,13 +271,13 @@ struct PaywallView: View {
                     .padding(.vertical, 8)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(justActivated ? MoleColors.success : MoleColors.accent)
+                .tint(justActivated ? MacMartinColors.success : MacMartinColors.accent)
                 .disabled(licenseKey.isEmpty || isActivating || justActivated)
 
                 if let errorMessage {
                     Label(errorMessage, systemImage: "exclamationmark.triangle.fill")
                         .font(.caption)
-                        .foregroundStyle(MoleColors.danger)
+                        .foregroundStyle(MacMartinColors.danger)
                         .transition(.opacity.combined(with: .move(edge: .top)))
                 }
             }

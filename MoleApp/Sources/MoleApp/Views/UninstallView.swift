@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct UninstallView: View {
-    @EnvironmentObject private var mole: MoleService
+    @EnvironmentObject private var mole: MacMartinService
     @State private var apps: [InstalledApp] = []
     @State private var loading = false
     @State private var searchText = ""
@@ -35,7 +35,7 @@ struct UninstallView: View {
                             .fontWeight(.semibold)
                     }
                     .buttonStyle(.borderedProminent)
-                    .tint(MoleColors.danger)
+                    .tint(MacMartinColors.danger)
                 }
                 if apps.isEmpty {
                     Button {
@@ -45,7 +45,7 @@ struct UninstallView: View {
                             .fontWeight(.semibold)
                     }
                     .buttonStyle(.borderedProminent)
-                    .tint(MoleColors.accent)
+                    .tint(MacMartinColors.accent)
                 }
             }
 
@@ -57,10 +57,10 @@ struct UninstallView: View {
                         .textFieldStyle(.plain)
                 }
                 .padding(10)
-                .background(MoleColors.cardBg)
+                .background(MacMartinColors.cardBg)
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
-                        .stroke(MoleColors.cardBorder, lineWidth: 1)
+                        .stroke(MacMartinColors.cardBorder, lineWidth: 1)
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .padding(.horizontal, 20)
@@ -80,16 +80,16 @@ struct UninstallView: View {
                     Spacer()
                     ZStack {
                         Circle()
-                            .fill(MoleColors.accent.opacity(0.1))
+                            .fill(MacMartinColors.accent.opacity(0.1))
                             .frame(width: 80, height: 80)
                         Image(systemName: "app.badge")
                             .font(.system(size: 32, weight: .light))
-                            .foregroundStyle(MoleColors.accent)
+                            .foregroundStyle(MacMartinColors.accent)
                     }
                     Text("Load your installed apps to get started")
                         .foregroundStyle(.secondary)
                     if let error {
-                        Text(error).foregroundStyle(MoleColors.danger).font(.caption)
+                        Text(error).foregroundStyle(MacMartinColors.danger).font(.caption)
                     }
                     Spacer()
                 }
@@ -164,7 +164,7 @@ struct AppRow: View {
         }
         .padding(.vertical, 6)
         .padding(.horizontal, 10)
-        .background(app.selected ? MoleColors.accent.opacity(0.06) : Color.clear)
+        .background(app.selected ? MacMartinColors.accent.opacity(0.06) : Color.clear)
         .cornerRadius(8)
     }
 }

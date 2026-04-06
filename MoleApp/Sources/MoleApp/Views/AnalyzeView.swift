@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct AnalyzeView: View {
-    @EnvironmentObject private var mole: MoleService
+    @EnvironmentObject private var mole: MacMartinService
     @State private var result: AnalyzeResult?
     @State private var currentPath: String = NSHomeDirectory()
     @State private var pathHistory: [String] = []
@@ -23,7 +23,7 @@ struct AnalyzeView: View {
                         .frame(width: 28, height: 28)
                 }
                 .buttonStyle(.plain)
-                .foregroundStyle(pathHistory.isEmpty ? Color.gray : MoleColors.accent)
+                .foregroundStyle(pathHistory.isEmpty ? Color.gray : MacMartinColors.accent)
                 .disabled(pathHistory.isEmpty)
 
                 TextField("Path", text: $currentPath)
@@ -33,7 +33,7 @@ struct AnalyzeView: View {
 
                 Button("Analyze") { analyze() }
                     .buttonStyle(.borderedProminent)
-                    .tint(MoleColors.accent)
+                    .tint(MacMartinColors.accent)
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 10)
@@ -76,7 +76,7 @@ struct AnalyzeView: View {
                     Spacer()
                     Image(systemName: "exclamationmark.triangle")
                         .font(.system(size: 32))
-                        .foregroundStyle(MoleColors.warning)
+                        .foregroundStyle(MacMartinColors.warning)
                     Text(error).foregroundStyle(.secondary).font(.caption)
                     Spacer()
                 }
@@ -85,11 +85,11 @@ struct AnalyzeView: View {
                     Spacer()
                     ZStack {
                         Circle()
-                            .fill(MoleColors.accent.opacity(0.1))
+                            .fill(MacMartinColors.accent.opacity(0.1))
                             .frame(width: 80, height: 80)
                         Image(systemName: "chart.pie")
                             .font(.system(size: 32, weight: .light))
-                            .foregroundStyle(MoleColors.accent)
+                            .foregroundStyle(MacMartinColors.accent)
                     }
                     Text("Enter a path and click Analyze")
                         .foregroundStyle(.secondary)
@@ -141,9 +141,9 @@ struct DiskEntryRow: View {
     }
 
     private var color: Color {
-        if fraction > 0.5 { return MoleColors.danger }
-        if fraction > 0.2 { return MoleColors.warning }
-        return MoleColors.accent
+        if fraction > 0.5 { return MacMartinColors.danger }
+        if fraction > 0.2 { return MacMartinColors.warning }
+        return MacMartinColors.accent
     }
 
     var body: some View {

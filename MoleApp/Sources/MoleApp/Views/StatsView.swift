@@ -63,7 +63,7 @@ struct StatsView: View {
                 title: "This Week",
                 value: formatBytes(bytes: stats.freedThisWeek()),
                 icon: "calendar",
-                color: MoleColors.accent
+                color: MacMartinColors.accent
             )
             statCard(
                 title: "This Month",
@@ -75,7 +75,7 @@ struct StatsView: View {
                 title: "All Time",
                 value: formatBytes(bytes: stats.totalFreed),
                 icon: "infinity",
-                color: MoleColors.success
+                color: MacMartinColors.success
             )
         }
     }
@@ -241,7 +241,7 @@ struct StatsView: View {
 
                     Text(formatBytes(bytes: event.bytesFreed))
                         .font(.system(.caption, design: .monospaced, weight: .semibold))
-                        .foregroundStyle(MoleColors.success)
+                        .foregroundStyle(MacMartinColors.success)
                 }
                 .padding(.vertical, 4)
 
@@ -257,11 +257,11 @@ struct StatsView: View {
 
     private func sourceColor(_ source: CleanupEvent.Source) -> Color {
         switch source {
-        case .clean: return MoleColors.accent
+        case .clean: return MacMartinColors.accent
         case .quickClean: return .purple
         case .privacySweep: return Color(red: 0.30, green: 0.75, blue: 0.85)
         case .duplicates: return .orange
-        case .maintenance: return MoleColors.success
+        case .maintenance: return MacMartinColors.success
         }
     }
 

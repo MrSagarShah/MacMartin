@@ -26,8 +26,8 @@ enum AlertType: String, Codable {
 
     var color: Color {
         switch self {
-        case .disk: return MoleColors.danger
-        case .memory: return MoleColors.warning
+        case .disk: return MacMartinColors.danger
+        case .memory: return MacMartinColors.warning
         case .cpu: return Color(red: 1.0, green: 0.45, blue: 0.30)
         case .battery: return Color(red: 0.95, green: 0.60, blue: 0.20)
         }

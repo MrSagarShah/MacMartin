@@ -14,13 +14,13 @@ struct HoverEffect: ViewModifier {
                     .opacity(isHovered ? 0.6 : 0)
             )
             .shadow(
-                color: MoleColors.accent.opacity(isHovered ? 0.08 : 0),
+                color: MacMartinColors.accent.opacity(isHovered ? 0.08 : 0),
                 radius: isHovered ? 12 : 0,
                 y: isHovered ? 4 : 0
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .stroke(MoleColors.accent.opacity(isHovered ? 0.15 : 0), lineWidth: 1)
+                    .stroke(MacMartinColors.accent.opacity(isHovered ? 0.15 : 0), lineWidth: 1)
             )
             .animation(.easeOut(duration: 0.2), value: isHovered)
             .onHover { isHovered = $0 }
@@ -93,7 +93,7 @@ extension View {
         modifier(PulseEffect())
     }
 
-    func glowEffect(color: Color = MoleColors.accent) -> some View {
+    func glowEffect(color: Color = MacMartinColors.accent) -> some View {
         modifier(GlowEffect(color: color))
     }
 }

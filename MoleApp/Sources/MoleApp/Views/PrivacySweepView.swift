@@ -83,7 +83,7 @@ struct PrivacySweepView: View {
                         .fontWeight(.semibold)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(MoleColors.danger)
+                .tint(MacMartinColors.danger)
                 .disabled(selectedCategories.isEmpty)
             }
             if phase == .idle || phase == .done {
@@ -94,7 +94,7 @@ struct PrivacySweepView: View {
                         .fontWeight(.semibold)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(MoleColors.accent)
+                .tint(MacMartinColors.accent)
             }
         }
     }
@@ -106,11 +106,11 @@ struct PrivacySweepView: View {
             Spacer()
             ZStack {
                 Circle()
-                    .fill(MoleColors.accent.opacity(0.1))
+                    .fill(MacMartinColors.accent.opacity(0.1))
                     .frame(width: 100, height: 100)
                 Image(systemName: "eye.slash")
                     .font(.system(size: 40, weight: .light))
-                    .foregroundStyle(MoleColors.accent)
+                    .foregroundStyle(MacMartinColors.accent)
             }
             .pulseEffect()
             Text("Privacy Sweep")
@@ -122,7 +122,7 @@ struct PrivacySweepView: View {
                 .frame(maxWidth: 380)
             if let error {
                 Text(error)
-                    .foregroundStyle(MoleColors.danger)
+                    .foregroundStyle(MacMartinColors.danger)
                     .font(.caption)
                     .padding(8)
                     .cardStyle(padding: 8)
@@ -138,11 +138,11 @@ struct PrivacySweepView: View {
             Spacer()
             ZStack {
                 Circle()
-                    .fill(MoleColors.accent.opacity(0.1))
+                    .fill(MacMartinColors.accent.opacity(0.1))
                     .frame(width: 100, height: 100)
                 ProgressView()
                     .scaleEffect(1.8)
-                    .tint(MoleColors.accent)
+                    .tint(MacMartinColors.accent)
             }
             Text("Scanning...")
                 .font(.title3.bold())
@@ -168,7 +168,7 @@ struct PrivacySweepView: View {
                     }
                 }
                 .buttonStyle(.plain)
-                .foregroundStyle(MoleColors.accent)
+                .foregroundStyle(MacMartinColors.accent)
                 .font(.subheadline.weight(.medium))
 
                 Spacer()
@@ -176,15 +176,15 @@ struct PrivacySweepView: View {
                 HStack(spacing: 6) {
                     Text("\(selectedCategories.count)")
                         .fontWeight(.bold)
-                        .foregroundStyle(MoleColors.accent)
+                        .foregroundStyle(MacMartinColors.accent)
                     Text("selected")
                         .foregroundStyle(.secondary)
                     Text("|")
                         .foregroundStyle(.quaternary)
                     Text(formatBytes(bytes: totalSelectedSize))
                         .fontWeight(.semibold)
-                        .foregroundStyle(totalSelectedSize > 1_073_741_824 ? MoleColors.danger :
-                            totalSelectedSize > 104_857_600 ? MoleColors.warning : .primary)
+                        .foregroundStyle(totalSelectedSize > 1_073_741_824 ? MacMartinColors.danger :
+                            totalSelectedSize > 104_857_600 ? MacMartinColors.warning : .primary)
                 }
                 .font(.subheadline)
             }
@@ -209,17 +209,17 @@ struct PrivacySweepView: View {
                 // Warning notice
                 HStack(spacing: 8) {
                     Image(systemName: "exclamationmark.triangle.fill")
-                        .foregroundStyle(MoleColors.warning)
+                        .foregroundStyle(MacMartinColors.warning)
                         .font(.caption)
                     Text("Swept data cannot be recovered. Browser history and recent files will be permanently deleted.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
                 .padding(12)
-                .background(MoleColors.warning.opacity(0.06))
+                .background(MacMartinColors.warning.opacity(0.06))
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
-                        .stroke(MoleColors.warning.opacity(0.2), lineWidth: 1)
+                        .stroke(MacMartinColors.warning.opacity(0.2), lineWidth: 1)
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .padding(.horizontal, 16)
@@ -235,18 +235,18 @@ struct PrivacySweepView: View {
             Spacer()
             ZStack {
                 Circle()
-                    .fill(MoleColors.danger.opacity(0.1))
+                    .fill(MacMartinColors.danger.opacity(0.1))
                     .frame(width: 100, height: 100)
                 ProgressView()
                     .scaleEffect(1.8)
-                    .tint(MoleColors.danger)
+                    .tint(MacMartinColors.danger)
             }
             Text("Sweeping...")
                 .font(.title3.bold())
 
             ProgressView(value: sweepProgress)
                 .progressViewStyle(.linear)
-                .tint(MoleColors.danger)
+                .tint(MacMartinColors.danger)
                 .frame(maxWidth: 260)
 
             Text("\(selectedCategories.count) categories selected")
@@ -263,11 +263,11 @@ struct PrivacySweepView: View {
             Spacer()
             ZStack {
                 Circle()
-                    .fill(MoleColors.success.opacity(0.1))
+                    .fill(MacMartinColors.success.opacity(0.1))
                     .frame(width: 100, height: 100)
                 Image(systemName: "checkmark.shield")
                     .font(.system(size: 40, weight: .medium))
-                    .foregroundStyle(MoleColors.success)
+                    .foregroundStyle(MacMartinColors.success)
             }
             Text("Sweep Complete")
                 .font(.title3.bold())
@@ -279,7 +279,7 @@ struct PrivacySweepView: View {
                             HStack(spacing: 6) {
                                 Image(systemName: entry.hasPrefix("[!]") ? "xmark.circle.fill" : "checkmark.circle.fill")
                                     .font(.caption2)
-                                    .foregroundStyle(entry.hasPrefix("[!]") ? MoleColors.warning : MoleColors.success)
+                                    .foregroundStyle(entry.hasPrefix("[!]") ? MacMartinColors.warning : MacMartinColors.success)
                                 Text(entry)
                                     .font(.system(.caption, design: .monospaced))
                                     .foregroundStyle(.secondary)
@@ -675,10 +675,10 @@ struct PrivacyCategoryCard: View {
                     if category.id == "dns_cache" {
                         Text("sudo")
                             .font(.caption2.weight(.semibold))
-                            .foregroundStyle(MoleColors.warning)
+                            .foregroundStyle(MacMartinColors.warning)
                             .padding(.horizontal, 5)
                             .padding(.vertical, 1)
-                            .background(MoleColors.warning.opacity(0.12))
+                            .background(MacMartinColors.warning.opacity(0.12))
                             .clipShape(Capsule())
                     }
                     Spacer()
@@ -728,11 +728,11 @@ struct PrivacyCategoryCard: View {
         case .done:
             Image(systemName: "checkmark.circle.fill")
                 .font(.system(size: 16))
-                .foregroundStyle(MoleColors.success)
+                .foregroundStyle(MacMartinColors.success)
         case .failed:
             Image(systemName: "exclamationmark.triangle.fill")
                 .font(.system(size: 16))
-                .foregroundStyle(MoleColors.warning)
+                .foregroundStyle(MacMartinColors.warning)
         case .pending:
             Image(systemName: category.icon)
                 .font(.system(size: 16))
@@ -742,14 +742,14 @@ struct PrivacyCategoryCard: View {
 
     private var sizeColor: Color {
         let bytes = category.sizeBytes
-        if bytes > 1_073_741_824 { return MoleColors.danger }
-        if bytes > 104_857_600 { return MoleColors.warning }
+        if bytes > 1_073_741_824 { return MacMartinColors.danger }
+        if bytes > 104_857_600 { return MacMartinColors.warning }
         return .primary
     }
 
     private var cardBackground: Color {
         if category.status == .done {
-            return MoleColors.success.opacity(0.04)
+            return MacMartinColors.success.opacity(0.04)
         }
         if category.selected && category.hasData {
             return category.color.opacity(0.04)
@@ -759,11 +759,11 @@ struct PrivacyCategoryCard: View {
 
     private var cardBorderColor: Color {
         if category.status == .done {
-            return MoleColors.success.opacity(0.2)
+            return MacMartinColors.success.opacity(0.2)
         }
         if category.selected && category.hasData {
             return category.color.opacity(0.2)
         }
-        return MoleColors.cardBorder
+        return MacMartinColors.cardBorder
     }
 }

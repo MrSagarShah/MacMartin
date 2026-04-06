@@ -1,5 +1,5 @@
 #!/bin/bash
-# Build MoleApp as a macOS .app bundle and optionally a DMG for sharing.
+# Build MacMartin as a macOS .app bundle and optionally a DMG for sharing.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -10,7 +10,7 @@ BUILD_DIR=".build"
 APP_BUNDLE="$BUILD_DIR/${APP_NAME}.app"
 CONTENTS="$APP_BUNDLE/Contents"
 
-echo "Building MoleApp (universal: arm64 + x86_64)..."
+echo "Building MacMartin (universal: arm64 + x86_64)..."
 swift build -c release --triple arm64-apple-macosx 2>&1
 swift build -c release --triple x86_64-apple-macosx 2>&1
 
@@ -176,7 +176,7 @@ if [[ "${1:-}" == "--dmg" ]]; then
     rm -rf "$STAGING"
     echo "DMG: $DMG_PATH"
     echo ""
-    echo "Share this file with others. They can drag Mole.app to Applications to install."
+    echo "Share this file with others. They can drag MacMartin.app to Applications to install."
 fi
 
 echo ""

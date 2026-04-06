@@ -8,7 +8,7 @@ struct BatteryHealthView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            ViewHeader(icon: "battery.100.bolt", title: "Battery Health", iconColor: MoleColors.success) {
+            ViewHeader(icon: "battery.100.bolt", title: "Battery Health", iconColor: MacMartinColors.success) {
                 Button {
                     refresh()
                 } label: {
@@ -176,7 +176,7 @@ struct BatteryHealthView: View {
                 tipRow(icon: "thermometer.sun", text: "Battery is warm. Avoid heavy usage while charging.", color: .red)
             }
             if info.healthPercent >= 80 && info.cycleCount <= 800 {
-                tipRow(icon: "checkmark.seal", text: "Battery is in good condition. Keep it between 20-80% for longevity.", color: MoleColors.success)
+                tipRow(icon: "checkmark.seal", text: "Battery is in good condition. Keep it between 20-80% for longevity.", color: MacMartinColors.success)
             }
             tipRow(icon: "lightbulb", text: "Avoid extreme temperatures and keep macOS updated for best battery life.", color: .yellow)
         }
@@ -208,7 +208,7 @@ struct BatteryHealthView: View {
 
     private func conditionColor(_ condition: String) -> Color {
         switch condition {
-        case "Normal": return MoleColors.success
+        case "Normal": return MacMartinColors.success
         case "Replace Soon": return .orange
         case "Replace Now", "Service Battery": return .red
         default: return .secondary

@@ -15,7 +15,7 @@ struct StartupItem: Identifiable {
 // MARK: - View
 
 struct StartupManagerView: View {
-    @EnvironmentObject private var mole: MoleService
+    @EnvironmentObject private var mole: MacMartinService
     @State private var items: [StartupItem] = []
     @State private var loading = false
     @State private var error: String?
@@ -53,7 +53,7 @@ struct StartupManagerView: View {
                 HStack(spacing: 8) {
                     Text("\(enabledCount) active")
                         .font(.caption)
-                        .foregroundStyle(MoleColors.subtleText)
+                        .foregroundStyle(MacMartinColors.subtleText)
 
                     Button {
                         refreshRotation += 360
@@ -83,7 +83,7 @@ struct StartupManagerView: View {
                             sectionCard(
                                 title: "Login Items",
                                 icon: "person.crop.circle",
-                                color: MoleColors.accent,
+                                color: MacMartinColors.accent,
                                 items: loginItems,
                                 baseDelay: 0.05
                             )
@@ -93,7 +93,7 @@ struct StartupManagerView: View {
                             sectionCard(
                                 title: "Launch Agents",
                                 icon: "gearshape.2",
-                                color: MoleColors.warning,
+                                color: MacMartinColors.warning,
                                 items: launchAgents,
                                 baseDelay: 0.1
                             )
@@ -103,7 +103,7 @@ struct StartupManagerView: View {
                             sectionCard(
                                 title: "Launch Daemons",
                                 icon: "lock.shield",
-                                color: MoleColors.danger,
+                                color: MacMartinColors.danger,
                                 items: launchDaemons,
                                 baseDelay: 0.15
                             )
@@ -126,17 +126,17 @@ struct StartupManagerView: View {
     private var searchBar: some View {
         HStack(spacing: 8) {
             Image(systemName: "magnifyingglass")
-                .foregroundStyle(MoleColors.subtleText)
+                .foregroundStyle(MacMartinColors.subtleText)
                 .font(.system(size: 13))
             TextField("Filter startup items...", text: $searchText)
                 .textFieldStyle(.plain)
                 .font(.subheadline)
         }
         .padding(10)
-        .background(MoleColors.cardBg)
+        .background(MacMartinColors.cardBg)
         .overlay(
             RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .stroke(MoleColors.cardBorder, lineWidth: 0.5)
+                .stroke(MacMartinColors.cardBorder, lineWidth: 0.5)
         )
         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
     }
@@ -160,10 +160,10 @@ struct StartupManagerView: View {
                 Spacer()
                 Text("\(items.count)")
                     .font(.caption.weight(.medium))
-                    .foregroundStyle(MoleColors.subtleText)
+                    .foregroundStyle(MacMartinColors.subtleText)
                     .padding(.horizontal, 8)
                     .padding(.vertical, 2)
-                    .background(MoleColors.cardBg)
+                    .background(MacMartinColors.cardBg)
                     .clipShape(Capsule())
             }
 
@@ -202,10 +202,10 @@ struct StartupManagerView: View {
                     if item.isSystem {
                         Text("System")
                             .font(.system(size: 9, weight: .semibold))
-                            .foregroundStyle(MoleColors.warning)
+                            .foregroundStyle(MacMartinColors.warning)
                             .padding(.horizontal, 5)
                             .padding(.vertical, 1)
-                            .background(MoleColors.warning.opacity(0.12))
+                            .background(MacMartinColors.warning.opacity(0.12))
                             .clipShape(Capsule())
                     }
                 }
@@ -221,7 +221,7 @@ struct StartupManagerView: View {
 
             Text(item.source)
                 .font(.system(size: 10, weight: .medium))
-                .foregroundStyle(MoleColors.subtleText)
+                .foregroundStyle(MacMartinColors.subtleText)
 
             if togglingIds.contains(item.id) {
                 ProgressView()
@@ -232,7 +232,7 @@ struct StartupManagerView: View {
                     .toggleStyle(.switch)
                     .controlSize(.small)
                     .labelsHidden()
-                    .tint(MoleColors.success)
+                    .tint(MacMartinColors.success)
             }
         }
         .padding(.vertical, 4)
@@ -257,7 +257,7 @@ struct StartupManagerView: View {
             Spacer()
             Image(systemName: "exclamationmark.triangle")
                 .font(.system(size: 36))
-                .foregroundStyle(MoleColors.warning)
+                .foregroundStyle(MacMartinColors.warning)
             Text("Failed to load startup items")
                 .font(.headline)
             Text(message)
@@ -267,7 +267,7 @@ struct StartupManagerView: View {
                 .frame(maxWidth: 350)
             Button("Retry") { loadItems() }
                 .buttonStyle(.borderedProminent)
-                .tint(MoleColors.accent)
+                .tint(MacMartinColors.accent)
             Spacer()
         }
         .padding()
@@ -277,7 +277,7 @@ struct StartupManagerView: View {
         VStack(spacing: 10) {
             Image(systemName: "magnifyingglass")
                 .font(.system(size: 28))
-                .foregroundStyle(MoleColors.subtleText)
+                .foregroundStyle(MacMartinColors.subtleText)
             Text("No items matching \"\(searchText)\"")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)

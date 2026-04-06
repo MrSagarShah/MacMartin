@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 
 @MainActor
-class MoleService: ObservableObject {
+class MacMartinService: ObservableObject {
     let molePath: String
 
     init() {
@@ -33,7 +33,7 @@ class MoleService: ObservableObject {
     func scanClean() async throws -> CleanScanResult {
         let output = try await run(args: ["clean", "--scan"])
         guard let data = output.data(using: .utf8) else {
-            throw MoleError.parseError("Invalid scan output")
+            throw MacMartinError.parseError("Invalid scan output")
         }
         return try JSONDecoder().decode(CleanScanResult.self, from: data)
     }
@@ -52,7 +52,7 @@ class MoleService: ObservableObject {
     func getStatus() async throws -> StatusMetrics {
         let output = try await run(args: ["status", "--json"])
         guard let data = output.data(using: .utf8) else {
-            throw MoleError.parseError("Invalid status output")
+            throw MacMartinError.parseError("Invalid status output")
         }
         return try JSONDecoder().decode(StatusMetrics.self, from: data)
     }
@@ -62,7 +62,7 @@ class MoleService: ObservableObject {
     func analyzeDirectory(_ path: String) async throws -> AnalyzeResult {
         let output = try await run(args: ["analyze", "--json", path])
         guard let data = output.data(using: .utf8) else {
-            throw MoleError.parseError("Invalid analyze output")
+            throw MacMartinError.parseError("Invalid analyze output")
         }
         return try JSONDecoder().decode(AnalyzeResult.self, from: data)
     }
@@ -150,7 +150,7 @@ class MoleService: ObservableObject {
                     } else {
                         let errData = stderrPipe.fileHandleForReading.readDataToEndOfFile()
                         let errOutput = String(data: errData, encoding: .utf8) ?? output
-                        continuation.resume(throwing: MoleError.commandFailed(errOutput.isEmpty ? output : errOutput))
+                        continuation.resume(throwing: MacMartinError.commandFailed(errOutput.isEmpty ? output : errOutput))
                     }
                 } catch {
                     continuation.resume(throwing: error)
@@ -160,7 +160,7 @@ class MoleService: ObservableObject {
     }
 }
 
-enum MoleError: LocalizedError {
+enum MacMartinError: LocalizedError {
     case commandFailed(String)
     case parseError(String)
 

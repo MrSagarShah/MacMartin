@@ -24,6 +24,9 @@ struct AboutView: View {
                     // Links
                     linksSection
 
+                    // Open source acknowledgements (MIT)
+                    acknowledgements
+
                     // App info
                     appInfo
                 }
@@ -36,8 +39,8 @@ struct AboutView: View {
 
     private var brandCard: some View {
         VStack(spacing: 16) {
-            MoleLogo(size: 72)
-                .shadow(color: MoleColors.accent.opacity(0.3), radius: 16, y: 6)
+            MacMartinLogo(size: 72)
+                .shadow(color: MacMartinColors.accent.opacity(0.3), radius: 16, y: 6)
 
             VStack(spacing: 6) {
                 HStack(spacing: 6) {
@@ -64,7 +67,7 @@ struct AboutView: View {
                 HStack(spacing: 8) {
                     Text("Krakel Labs India")
                         .font(.headline)
-                        .foregroundStyle(MoleColors.accent)
+                        .foregroundStyle(MacMartinColors.accent)
                     Image(systemName: "arrow.up.right.square")
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -92,7 +95,7 @@ struct AboutView: View {
             if subscribed {
                 HStack(spacing: 8) {
                     Image(systemName: "checkmark.circle.fill")
-                        .foregroundStyle(MoleColors.success)
+                        .foregroundStyle(MacMartinColors.success)
                     Text("You're on the list!")
                         .fontWeight(.medium)
                 }
@@ -117,7 +120,7 @@ struct AboutView: View {
                         }
                     }
                     .buttonStyle(.borderedProminent)
-                    .tint(MoleColors.accent)
+                    .tint(MacMartinColors.accent)
                     .disabled(email.isEmpty || !email.contains("@") || subscribing)
                 }
             }
@@ -146,7 +149,7 @@ struct AboutView: View {
             HStack(spacing: 12) {
                 Image(systemName: icon)
                     .font(.system(size: 14))
-                    .foregroundStyle(MoleColors.accent)
+                    .foregroundStyle(MacMartinColors.accent)
                     .frame(width: 24)
 
                 VStack(alignment: .leading, spacing: 1) {
@@ -169,6 +172,37 @@ struct AboutView: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+    }
+
+    // MARK: - Open Source Acknowledgements
+
+    private var acknowledgements: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 8) {
+                Image(systemName: "heart.text.square")
+                    .font(.system(size: 13))
+                    .foregroundStyle(MacMartinColors.accent)
+                Text("Open Source Licenses")
+                    .font(.subheadline.weight(.semibold))
+            }
+
+            VStack(alignment: .leading, spacing: 6) {
+                Text("MacMartin is built on the open-source Mole engine.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+
+                Text("Copyright (c) 2025 tw93")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+
+                Text("Licensed under the MIT License.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .cardStyle()
     }
 
     // MARK: - App Info
