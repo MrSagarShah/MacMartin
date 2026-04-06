@@ -122,9 +122,9 @@ for (size, name) in sizes {
 }
 ICONSCRIPT
 
-swift "$ICON_SCRIPT" "$CONTENTS/Resources" 2>/dev/null || true
+swift "$ICON_SCRIPT" "$CONTENTS/Resources" 2> /dev/null || true
 if [[ -d "$CONTENTS/Resources/AppIcon.iconset" ]]; then
-    iconutil -c icns "$CONTENTS/Resources/AppIcon.iconset" -o "$CONTENTS/Resources/AppIcon.icns" 2>/dev/null || true
+    iconutil -c icns "$CONTENTS/Resources/AppIcon.iconset" -o "$CONTENTS/Resources/AppIcon.icns" 2> /dev/null || true
     rm -rf "$CONTENTS/Resources/AppIcon.iconset"
     echo "App icon generated."
 else
