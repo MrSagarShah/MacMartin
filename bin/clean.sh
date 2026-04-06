@@ -927,9 +927,12 @@ EOF
 
 fast_dir_size_kb() {
     local dir="$1"
-    [[ -d "$dir" ]] || { echo "0"; return; }
+    [[ -d "$dir" ]] || {
+        echo "0"
+        return
+    }
     local raw
-    raw=$(du -skP "$dir" 2>/dev/null | head -1 | awk '{print $1}') || true
+    raw=$(du -skP "$dir" 2> /dev/null | head -1 | awk '{print $1}') || true
     # Ensure numeric output.
     if [[ "$raw" =~ ^[0-9]+$ ]]; then
         echo "$raw"
