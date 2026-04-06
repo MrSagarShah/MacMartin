@@ -1,8 +1,18 @@
 import SwiftUI
 import UserNotifications
+import ServiceManagement
+
+// MARK: - App Delegate (keep alive when window closes)
+
+class MoleAppDelegate: NSObject, NSApplicationDelegate {
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        return false  // Stay alive in menu bar
+    }
+}
 
 @main
 struct MoleApp: App {
+    @NSApplicationDelegateAdaptor(MoleAppDelegate.self) var appDelegate
     @StateObject private var moleService = MoleService()
     @StateObject private var licenseManager = LicenseManager()
     @StateObject private var updateManager = UpdateManager()
@@ -99,12 +109,17 @@ struct ContentView: View {
             case .analyze: AnalyzeView()
             case .uninstall: UninstallView()
             case .optimize: OptimizeView()
+            case .largeFiles: LargeFileFinderView()
             case .duplicates: DuplicateFinderView()
             case .privacy: PrivacySweepView()
             case .startup: StartupManagerView()
             case .updates: AppUpdatesView()
+            case .ram: RAMBoosterView()
+            case .battery: BatteryHealthView()
+            case .maintenance: MaintenanceView()
             case .storage: StorageBreakdownView()
             case .alerts: AlertsView()
+            case .stats: StatsView()
             case .about: AboutView()
             }
         }

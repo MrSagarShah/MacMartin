@@ -1,5 +1,6 @@
 import SwiftUI
 import AppKit
+import ServiceManagement
 
 struct MenuBarView: View {
     @EnvironmentObject private var monitor: MenuBarMonitor
@@ -7,6 +8,7 @@ struct MenuBarView: View {
     @State private var isCleaningQuick = false
     @State private var isPurgingRAM = false
     @State private var lastCleaned: String = UserDefaults.standard.string(forKey: "macmartin_last_cleaned") ?? "Never"
+    @State private var launchAtLogin: Bool = SMAppService.mainApp.status == .enabled
 
     var body: some View {
         VStack(spacing: 0) {
@@ -87,14 +89,39 @@ struct MenuBarView: View {
 
                 Divider().padding(.vertical, 4)
 
-                quickAction(icon: "macwindow", label: "Open MacMartin", color: MoleColors.accent) {
-                    NSApp.activate(ignoringOtherApps: true)
-                    for window in NSApp.windows {
-                        if window.canBecomeMain {
-                            window.makeKeyAndOrderFront(nil)
-                            break
+                // Launch at Login toggle
+                HStack(spacing: 8) {
+                    Image(systemName: "sunrise")
+                        .font(.system(size: 11))
+                        .foregroundStyle(.orange)
+                        .frame(width: 16)
+                    Toggle("Launch at Login", isOn: $launchAtLogin)
+                        .toggleStyle(.switch)
+                        .controlSize(.mini)
+                        .font(.subheadline)
+                        .onChange(of: launchAtLogin) { _, newValue in
+                            do {
+                                if newValue {
+                                    try SMAppService.mainApp.register()
+                                } else {
+                                    try SMAppService.mainApp.unregister()
+                                }
+                            } catch {
+                                launchAtLogin = !newValue  // revert on failure
+                            }
                         }
+                }
+                .padding(.vertical, 4)
+                .padding(.horizontal, 8)
+
+                quickAction(icon: "macwindow", label: "Open MacMartin", color: MoleColors.accent) {
+                    // Open or create the main window
+                    if let window = NSApp.windows.first(where: { $0.canBecomeMain }) {
+                        window.makeKeyAndOrderFront(nil)
+                    } else {
+                        NSApp.sendAction(Selector(("newWindowForTab:")), to: nil, from: nil)
                     }
+                    NSApp.activate(ignoringOtherApps: true)
                 }
 
                 quickAction(icon: "power", label: "Quit", color: .secondary) {
@@ -169,30 +196,48 @@ struct MenuBarView: View {
     private func quickClean() {
         isCleaningQuick = true
         Task {
+            // Scan first to get size estimate
+            let scanResult = try? await mole.scanClean()
+            let estimatedBytes = Int64(scanResult?.totalSizeKb ?? 0) * 1024
+
             _ = try? await mole.runCleanAll()
             let formatter = DateFormatter()
             formatter.dateStyle = .short
             formatter.timeStyle = .short
             lastCleaned = formatter.string(from: Date())
             UserDefaults.standard.set(lastCleaned, forKey: "macmartin_last_cleaned")
+
+            if estimatedBytes > 0 {
+                StatsManager.shared.record(
+                    source: .quickClean,
+                    bytesFreed: estimatedBytes,
+                    detail: "Menu bar quick clean"
+                )
+            }
             isCleaningQuick = false
         }
     }
 
     private func purgeRAM() {
         isPurgingRAM = true
-        Task {
-            // macOS memory pressure relief — runs `memory_pressure` or `purge` if available
+        Task.detached(priority: .userInitiated) {
             let process = Process()
             process.executableURL = URL(fileURLWithPath: "/usr/bin/memory_pressure")
-            process.arguments = ["-l", "warn"]
+            process.arguments = ["-l", "critical"]
             let pipe = Pipe()
             process.standardOutput = pipe
             process.standardError = pipe
             try? process.run()
+            // Kill after 10s if it hangs
+            let proc = process
+            DispatchQueue.global().asyncAfter(deadline: .now() + 10) {
+                if proc.isRunning { proc.terminate() }
+            }
             process.waitUntilExit()
-            monitor.poll()
-            isPurgingRAM = false
+            await MainActor.run {
+                monitor.poll()
+                isPurgingRAM = false
+            }
         }
     }
 }

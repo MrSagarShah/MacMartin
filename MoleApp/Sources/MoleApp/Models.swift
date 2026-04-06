@@ -14,12 +14,17 @@ enum SidebarTab: String, CaseIterable, Identifiable {
     case analyze = "Analyze"
     case uninstall = "Uninstall"
     case optimize = "Optimize"
+    case largeFiles = "Large Files"
     case duplicates = "Duplicates"
     case privacy = "Privacy"
     case startup = "Startup"
     case updates = "Updates"
+    case ram = "RAM Booster"
+    case battery = "Battery"
+    case maintenance = "Maintenance"
     case storage = "Storage"
     case alerts = "Alerts"
+    case stats = "History"
     case about = "About"
 
     var id: String { rawValue }
@@ -31,12 +36,17 @@ enum SidebarTab: String, CaseIterable, Identifiable {
         case .analyze: return "chart.pie"
         case .uninstall: return "xmark.app"
         case .optimize: return "gauge.with.dots.needle.33percent"
+        case .largeFiles: return "doc.badge.arrow.up"
         case .duplicates: return "doc.on.doc"
         case .privacy: return "eye.slash"
         case .startup: return "power"
         case .updates: return "arrow.triangle.2.circlepath.circle"
+        case .ram: return "memorychip"
+        case .battery: return "battery.100.bolt"
+        case .maintenance: return "wrench.and.screwdriver"
         case .storage: return "chart.pie.fill"
         case .alerts: return "bell.badge"
+        case .stats: return "chart.bar"
         case .about: return "info.circle"
         }
     }
@@ -44,7 +54,7 @@ enum SidebarTab: String, CaseIterable, Identifiable {
     var isPro: Bool {
         switch self {
         case .analyze, .uninstall, .optimize, .duplicates, .privacy, .startup, .updates: return true
-        case .clean, .status, .storage, .alerts, .about: return false
+        case .clean, .status, .largeFiles, .ram, .battery, .maintenance, .storage, .alerts, .stats, .about: return false
         }
     }
 
@@ -55,12 +65,17 @@ enum SidebarTab: String, CaseIterable, Identifiable {
         case .analyze: return "Explore disk usage and find large files"
         case .uninstall: return "Completely remove apps and their leftovers"
         case .optimize: return "Tune system performance with 14 optimizations"
+        case .largeFiles: return "Find the biggest files eating your disk space"
         case .duplicates: return "Find and remove duplicate files wasting space"
         case .privacy: return "Clear browser history, recent files, and traces"
         case .startup: return "Control what launches when you log in"
         case .updates: return "Check installed apps for available updates"
+        case .ram: return "See what's eating memory and free up RAM"
+        case .battery: return "Battery health, cycle count, and condition"
+        case .maintenance: return "Flush DNS, rebuild Spotlight, repair permissions"
         case .storage: return "Visual breakdown of what's using your disk"
         case .alerts: return "Get notified when system resources are critical"
+        case .stats: return "Track your cleanups and space freed over time"
         case .about: return "About Krakel Labs"
         }
     }
@@ -68,15 +83,16 @@ enum SidebarTab: String, CaseIterable, Identifiable {
     /// Group tabs into sidebar sections.
     var section: String {
         switch self {
-        case .clean, .status: return "Essentials"
-        case .analyze, .uninstall, .optimize: return "Tools"
+        case .clean, .status, .stats: return "Essentials"
+        case .analyze, .uninstall, .optimize, .largeFiles: return "Tools"
         case .duplicates, .privacy, .startup, .updates: return "Utilities"
+        case .ram, .battery, .maintenance: return "System"
         case .storage, .alerts, .about: return "More"
         }
     }
 
     static var sections: [(String, [SidebarTab])] {
-        let order = ["Essentials", "Tools", "Utilities", "More"]
+        let order = ["Essentials", "Tools", "Utilities", "System", "More"]
         return order.compactMap { section in
             let tabs = allCases.filter { $0.section == section }
             return tabs.isEmpty ? nil : (section, tabs)

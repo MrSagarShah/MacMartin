@@ -266,11 +266,18 @@ struct CleanView: View {
 
     private func startClean() {
         let names = selectedCategories.map(\.name)
+        let sizeKb = selectedSize
         phase = .cleaning
         Task {
             do {
                 let output = try await mole.runClean(categories: names)
                 cleanOutput = stripAnsi(output)
+                StatsManager.shared.record(
+                    source: .clean,
+                    bytesFreed: Int64(sizeKb) * 1024,
+                    itemCount: names.count,
+                    detail: names.prefix(3).joined(separator: ", ")
+                )
                 phase = .done
             } catch {
                 self.error = error.localizedDescription

@@ -136,7 +136,7 @@ class MoleService: ObservableObject {
                 process.arguments = args
                 process.standardOutput = stdoutPipe
                 process.standardError = stderrPipe
-                process.environment = ProcessInfo.processInfo.environment
+                process.environment = Foundation.ProcessInfo.processInfo.environment
 
                 do {
                     try process.run()

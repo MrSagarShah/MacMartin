@@ -72,7 +72,7 @@ class MenuBarMonitor: ObservableObject {
     // MARK: - Memory
 
     private func getMemoryInfo() -> (used: Double, total: Double) {
-        let total = Double(ProcessInfo.processInfo.physicalMemory) / (1024 * 1024 * 1024)
+        let total = Double(Foundation.ProcessInfo.processInfo.physicalMemory) / (1024 * 1024 * 1024)
 
         var stats = vm_statistics64()
         var count = mach_msg_type_number_t(MemoryLayout<vm_statistics64>.size / MemoryLayout<integer_t>.size)

@@ -182,6 +182,13 @@ final class DuplicateScannerModel: ObservableObject {
                     return g.files.count > 1 ? g : nil
                 }
                 self?.phase = .deleted(count, bytes)
+
+                StatsManager.shared.record(
+                    source: .duplicates,
+                    bytesFreed: bytes,
+                    itemCount: count,
+                    detail: "\(count) duplicate files"
+                )
             }
         }
     }

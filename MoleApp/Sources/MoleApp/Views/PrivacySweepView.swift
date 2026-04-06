@@ -451,6 +451,31 @@ struct PrivacySweepView: View {
 
             await MainActor.run {
                 phase = .done
+                // Estimate bytes from sweep log — extract sizes like "(123.5 MB)"
+                var totalBytes: Int64 = 0
+                for log in sweepLog {
+                    if let range = log.range(of: "\\(([\\d.]+)\\s*(KB|MB|GB)\\)", options: .regularExpression) {
+                        let match = String(log[range]).dropFirst().dropLast()
+                        let parts = match.split(separator: " ")
+                        if let num = Double(parts.first ?? "0") {
+                            let unit = String(parts.last ?? "MB")
+                            switch unit {
+                            case "KB": totalBytes += Int64(num * 1024)
+                            case "MB": totalBytes += Int64(num * 1024 * 1024)
+                            case "GB": totalBytes += Int64(num * 1024 * 1024 * 1024)
+                            default: break
+                            }
+                        }
+                    }
+                }
+                if totalBytes > 0 {
+                    StatsManager.shared.record(
+                        source: .privacySweep,
+                        bytesFreed: totalBytes,
+                        itemCount: toSweep.count,
+                        detail: "\(toSweep.count) categories swept"
+                    )
+                }
             }
         }
     }

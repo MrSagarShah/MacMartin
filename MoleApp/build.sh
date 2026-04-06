@@ -10,16 +10,24 @@ BUILD_DIR=".build"
 APP_BUNDLE="$BUILD_DIR/${APP_NAME}.app"
 CONTENTS="$APP_BUNDLE/Contents"
 
-echo "Building MoleApp..."
-swift build -c release 2>&1
+echo "Building MoleApp (universal: arm64 + x86_64)..."
+swift build -c release --triple arm64-apple-macosx 2>&1
+swift build -c release --triple x86_64-apple-macosx 2>&1
+
+echo "Creating universal binary with lipo..."
+UNIVERSAL_BIN="$BUILD_DIR/MoleApp-universal"
+lipo -create \
+    "$BUILD_DIR/arm64-apple-macosx/release/MoleApp" \
+    "$BUILD_DIR/x86_64-apple-macosx/release/MoleApp" \
+    -output "$UNIVERSAL_BIN"
 
 echo "Creating app bundle..."
 rm -rf "$APP_BUNDLE"
 mkdir -p "$CONTENTS/MacOS"
 mkdir -p "$CONTENTS/Resources"
 
-# Copy binary
-cp "$BUILD_DIR/release/MoleApp" "$CONTENTS/MacOS/$APP_NAME"
+# Copy universal binary
+cp "$UNIVERSAL_BIN" "$CONTENTS/MacOS/$APP_NAME"
 
 # Create Info.plist
 cat > "$CONTENTS/Info.plist" << 'EOF'
@@ -51,6 +59,8 @@ cat > "$CONTENTS/Info.plist" << 'EOF'
     <true/>
     <key>CFBundleIconFile</key>
     <string>AppIcon</string>
+    <key>LSUIElement</key>
+    <true/>
 </dict>
 </plist>
 EOF
@@ -131,6 +141,10 @@ else
     echo "App icon generation skipped (requires display context)."
 fi
 rm -f "$ICON_SCRIPT"
+
+# Self-sign the app to avoid repeated Gatekeeper warnings
+echo "Signing app..."
+codesign --force --deep --sign - "$APP_BUNDLE" 2>/dev/null && echo "App signed." || echo "Signing skipped."
 
 echo ""
 echo "Built: $APP_BUNDLE"
