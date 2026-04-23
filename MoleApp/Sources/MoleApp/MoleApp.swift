@@ -5,6 +5,10 @@ import ServiceManagement
 // MARK: - App Delegate (keep alive when window closes)
 
 class MacMartinAppDelegate: NSObject, NSApplicationDelegate {
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        MoveToApplications.promptIfNeeded()
+    }
+
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return false  // Stay alive in menu bar
     }

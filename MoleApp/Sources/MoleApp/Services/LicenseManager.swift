@@ -11,7 +11,8 @@ enum LicenseTier: String {
 /// The app embeds the public key; only the developer has the private key.
 @MainActor
 class LicenseManager: ObservableObject {
-    @Published private(set) var tier: LicenseTier = .free
+    // MacMartin is free — all features unlocked by default.
+    @Published private(set) var tier: LicenseTier = .pro
     @Published var showPaywall: Bool = false
     @Published private(set) var licenseEmail: String?
 

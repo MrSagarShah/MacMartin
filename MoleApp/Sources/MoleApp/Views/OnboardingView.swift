@@ -5,7 +5,7 @@ struct OnboardingView: View {
     @Binding var isComplete: Bool
     @State private var currentPage = 0
 
-    private let totalPages = 4
+    private let totalPages = 3
 
     var body: some View {
         ZStack {
@@ -33,7 +33,6 @@ struct OnboardingView: View {
                     switch currentPage {
                     case 0: welcomePage
                     case 1: featuresPage
-                    case 2: proPage
                     default: readyPage
                     }
                 }
