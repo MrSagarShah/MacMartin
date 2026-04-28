@@ -164,6 +164,7 @@ clean_dev_python() {
     safe_clean ~/.conda/pkgs/* "Conda packages cache"
     safe_clean ~/anaconda3/pkgs/* "Anaconda packages cache"
     safe_clean ~/.cache/wandb/* "Weights & Biases cache"
+    safe_clean ~/Library/Caches/com.apple.python/* "Apple Python framework cache"
 }
 # Go build/module caches.
 clean_dev_go() {
@@ -315,6 +316,8 @@ clean_dev_frontend() {
     safe_clean ~/.parcel-cache/* "Parcel cache"
     safe_clean ~/.cache/eslint/* "ESLint cache"
     safe_clean ~/.cache/prettier/* "Prettier cache"
+    safe_clean ~/Library/Caches/ms-playwright/* "Playwright browsers"
+    safe_clean ~/Library/Caches/ms-playwright-go/* "Playwright (Go) browsers"
 }
 # Check for multiple Android NDK versions.
 check_android_ndk() {
