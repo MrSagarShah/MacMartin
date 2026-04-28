@@ -61,14 +61,34 @@ final class WhisperEngine: ObservableObject {
         state = .transcribing
         do {
             let results = try await pipeline.transcribe(audioArray: samples)
-            let text = results.map(\.text).joined(separator: " ")
-                .trimmingCharacters(in: .whitespacesAndNewlines)
+            let raw = results.map(\.text).joined(separator: " ")
+            let cleaned = Self.stripArtifacts(raw)
             state = .ready
-            return text.isEmpty ? nil : text
+            return cleaned.isEmpty ? nil : cleaned
         } catch {
             state = .error("Transcription failed: \(error.localizedDescription)")
             return nil
         }
+    }
+
+    /// Whisper occasionally emits training-corpus markers like [BLANK_AUDIO],
+    /// [INAUDIBLE], [MUSIC], (silence), or speaker prefixes (>>, <<). Strip them
+    /// so the user never pastes those.
+    static func stripArtifacts(_ text: String) -> String {
+        var out = text
+        let patterns = [
+            #"\[[A-Z_ ]{2,}\]"#,                           // [BLANK_AUDIO], [MUSIC]
+            #"\[\s*(?i:silence|music|inaudible|pause|noise|sound effects|laughter|applause)\s*\]"#,
+            #"\(\s*(?i:silence|music|inaudible|pause|noise|sound effects|laughter|applause)\s*\)"#,
+        ]
+        for pattern in patterns {
+            out = out.replacingOccurrences(of: pattern, with: "", options: .regularExpression)
+        }
+        out = out.replacingOccurrences(of: ">>", with: "")
+        out = out.replacingOccurrences(of: "<<", with: "")
+        // Collapse repeated whitespace and trim.
+        out = out.replacingOccurrences(of: #"\s+"#, with: " ", options: .regularExpression)
+        return out.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     // MARK: - Model resolution
