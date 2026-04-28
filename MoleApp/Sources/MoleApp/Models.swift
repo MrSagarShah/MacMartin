@@ -23,6 +23,7 @@ enum SidebarTab: String, CaseIterable, Identifiable {
     case battery = "Battery"
     case maintenance = "Maintenance"
     case storage = "Storage"
+    case dictation = "Dictation"
     case alerts = "Alerts"
     case stats = "History"
     case about = "About"
@@ -45,6 +46,7 @@ enum SidebarTab: String, CaseIterable, Identifiable {
         case .battery: return "battery.100.bolt"
         case .maintenance: return "wrench.and.screwdriver"
         case .storage: return "chart.pie.fill"
+        case .dictation: return "mic.fill"
         case .alerts: return "bell.badge"
         case .stats: return "chart.bar"
         case .about: return "info.circle"
@@ -54,7 +56,7 @@ enum SidebarTab: String, CaseIterable, Identifiable {
     var isPro: Bool {
         switch self {
         case .analyze, .uninstall, .optimize, .duplicates, .privacy, .startup, .updates: return true
-        case .clean, .status, .largeFiles, .ram, .battery, .maintenance, .storage, .alerts, .stats, .about: return false
+        case .clean, .status, .largeFiles, .ram, .battery, .maintenance, .storage, .dictation, .alerts, .stats, .about: return false
         }
     }
 
@@ -74,6 +76,7 @@ enum SidebarTab: String, CaseIterable, Identifiable {
         case .battery: return "Battery health, cycle count, and condition"
         case .maintenance: return "Flush DNS, rebuild Spotlight, repair permissions"
         case .storage: return "Visual breakdown of what's using your disk"
+        case .dictation: return "Hold a hotkey to dictate anywhere on macOS"
         case .alerts: return "Get notified when system resources are critical"
         case .stats: return "Track your cleanups and space freed over time"
         case .about: return "About Krakel Labs"
@@ -87,12 +90,13 @@ enum SidebarTab: String, CaseIterable, Identifiable {
         case .analyze, .uninstall, .optimize, .largeFiles: return "Tools"
         case .duplicates, .privacy, .startup, .updates: return "Utilities"
         case .ram, .battery, .maintenance: return "System"
+        case .dictation: return "Productivity"
         case .storage, .alerts, .about: return "More"
         }
     }
 
     static var sections: [(String, [SidebarTab])] {
-        let order = ["Essentials", "Tools", "Utilities", "System", "More"]
+        let order = ["Essentials", "Tools", "Utilities", "System", "Productivity", "More"]
         return order.compactMap { section in
             let tabs = allCases.filter { $0.section == section }
             return tabs.isEmpty ? nil : (section, tabs)

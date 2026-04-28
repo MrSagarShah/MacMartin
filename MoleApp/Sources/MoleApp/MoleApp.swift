@@ -22,6 +22,7 @@ struct MacMartinApp: App {
     @StateObject private var updateManager = UpdateManager()
     @StateObject private var menuBarMonitor = MenuBarMonitor()
     @StateObject private var alertManager = AlertManager()
+    @StateObject private var dictationService = DictationService()
 
     var body: some Scene {
         // Main window
@@ -32,6 +33,7 @@ struct MacMartinApp: App {
                 .environmentObject(updateManager)
                 .environmentObject(menuBarMonitor)
                 .environmentObject(alertManager)
+                .environmentObject(dictationService)
                 .frame(minWidth: 800, minHeight: 560)
         }
         .windowStyle(.titleBar)
@@ -122,6 +124,7 @@ struct ContentView: View {
             case .battery: BatteryHealthView()
             case .maintenance: MaintenanceView()
             case .storage: StorageBreakdownView()
+            case .dictation: DictationView()
             case .alerts: AlertsView()
             case .stats: StatsView()
             case .about: AboutView()

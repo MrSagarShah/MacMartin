@@ -59,8 +59,8 @@ cat > "$CONTENTS/Info.plist" << 'EOF'
     <true/>
     <key>CFBundleIconFile</key>
     <string>AppIcon</string>
-    <key>LSUIElement</key>
-    <true/>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>MacMartin uses the microphone to capture audio while you dictate.</string>
 </dict>
 </plist>
 EOF
