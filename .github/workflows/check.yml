@@ -21,7 +21,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Cache Homebrew
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v4
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v4
         with:
           path: |
             ~/Library/Caches/Homebrew
@@ -76,7 +76,7 @@ jobs:
           ref: ${{ (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref) || github.ref }}
 
       - name: Cache Homebrew
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v4
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v4
         with:
           path: |
             ~/Library/Caches/Homebrew
